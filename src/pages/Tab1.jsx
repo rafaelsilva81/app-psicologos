@@ -1,7 +1,18 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import {
+  IonButton,
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+} from "@ionic/react";
 
+import { useAuth } from "../services/auth";
+import { useHistory } from "react-router-dom";
 
 const Tab1 = () => {
+  let { logOut } = useAuth();
+  const history = useHistory();
   return (
     <IonPage>
       <IonHeader>
@@ -15,6 +26,14 @@ const Tab1 = () => {
             <IonTitle size="large">Tab 1</IonTitle>
           </IonToolbar>
         </IonHeader>
+        <IonButton
+          onClick={async () => {
+            await logOut();
+            history.replace("/login");
+          }}
+        >
+          LOGOUT
+        </IonButton>
       </IonContent>
     </IonPage>
   );
