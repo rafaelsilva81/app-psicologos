@@ -1,12 +1,12 @@
-import React, { createContext, useContext, useState } from "react";
-import app from "../firebase.config";
+import React, { createContext, useContext, useState } from 'react';
+import app from '../firebase.config';
 import {
 	browserLocalPersistence,
 	getAuth,
 	setPersistence,
 	signInWithEmailAndPassword,
 	signOut,
-} from "firebase/auth";
+} from 'firebase/auth';
 
 const auth = getAuth(app);
 
@@ -22,12 +22,12 @@ export const AuthProvider = (props) => {
 			.then((userCredential) => {
 				// Signed in
 				const user = userCredential.user;
-				console.log("Logado com sucesso");
+				console.log('Logado com sucesso');
 				setAuthInfo({ initialized: true, loggedIn: true, user: user });
 				return true;
 			})
 			.catch((error) => {
-				console.log(error.message + " / COD: " + error.code);
+				console.log(error.message + ' / COD: ' + error.code);
 				return error.message;
 			});
 	};
@@ -35,7 +35,7 @@ export const AuthProvider = (props) => {
 	const logOut = async () => {
 		await signOut(auth)
 			.then(() => {
-				console.log("DESLOGADO");
+				console.log('DESLOGADO');
 				setAuthInfo({ initialized: true, loggedIn: false, user: null });
 				return true;
 			})
@@ -47,17 +47,17 @@ export const AuthProvider = (props) => {
 
 	// TODO: ARRUMAR ESSA FUNÇÃO
 	const initializeAuth = async () => {
-		console.log("initializeAuth was called, searching user");
+		console.log('initializeAuth was called, searching user');
 		await auth.onAuthStateChanged((user) => {
 			if (user != null) {
-				console.log("user found");
+				console.log('user found');
 				setAuthInfo({
 					initialized: true,
 					loggedIn: true,
 					user: user,
 				});
 			} else {
-				console.log("user not found");
+				console.log('user not found');
 				setAuthInfo({
 					initialized: true,
 					loggedIn: false,
@@ -68,10 +68,10 @@ export const AuthProvider = (props) => {
 	};
 
 	const checkFirstAccess = () => {
-		let response = window.localStorage.getItem("HAS_ACCESSED") || false;
-		if (response == false) {
-			console.log("Its your first access");
-			window.localStorage.setItem("HAS_ACCESSED", true);
+		let response = window.localStorage.getItem('HAS_ACCESSED') || false;
+		if (response === false) {
+			console.log('Its your first access');
+			window.localStorage.setItem('HAS_ACCESSED', true);
 		}
 
 		return response;

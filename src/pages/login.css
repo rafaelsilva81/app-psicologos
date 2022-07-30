@@ -1,0 +1,12 @@
+.main-container {
+	height: 100vh !important;
+	margin: 0;
+}
+
+.login-title {
+	font-weight: 600;
+}
+
+.login-logo {
+	max-height: 12rem;
+}

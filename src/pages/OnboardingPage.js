@@ -50,7 +50,7 @@ const OnboardingPage = () => {
 
 	return (
 		<IonPage>
-			<IonContent fullscreen scroll-y={false}>
+			<IonContent fullscreen>
 				<CustomCircle position="top-left" />
 				<CustomCircle
 					position="bottom-right"

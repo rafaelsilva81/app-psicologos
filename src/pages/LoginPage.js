@@ -1,15 +1,21 @@
 import {
     IonButton,
-    IonContent,
+    IonCol,
+    IonGrid,
     IonInput,
     IonItem,
     IonLabel,
     IonPage,
+    IonRow,
     IonText,
-} from "@ionic/react";
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useAuth } from "../services/auth";
+} from '@ionic/react';
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useAuth } from '../services/auth';
+import CustomCircle from '../components/CustomCircle';
+import './login.css';
+
+// import loginSvg from "/assets/imgs/login.svg";
 
 /* TODO: Ler isso aqui, adicionar validação e melhorar design */
 // TODO: Remover unused imports
@@ -19,8 +25,8 @@ import { useAuth } from "../services/auth";
 const EMAILREGEXP = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
 const initialValues = {
-    email: "",
-    password: "",
+    email: '',
+    password: '',
 };
 
 const LoginPage = ({ history }) => {
@@ -29,66 +35,78 @@ const LoginPage = ({ history }) => {
     useEffect(() => {
         let hasAcessed = checkFirstAccess();
         if (hasAcessed === false) {
-            history.replace("/onboarding");
+            history.replace('/onboarding');
         }
-    }, [checkFirstAccess]);
+    }, [checkFirstAccess, history]);
 
-    const { handleSubmit, control, setValue, register, getValues } = useForm({
+    // const { handleSubmit, control, setValue, register, getValues } = useForm({
+    //     defaultValues: { ...initialValues },
+    // });
+
+    const { handleSubmit, register } = useForm({
         defaultValues: { ...initialValues },
     });
 
     const loginUser = async (data) => {
         await logIn(data);
-        history.replace("/tab1");
+        history.replace('/tab1');
     };
 
     return (
-        <IonPage id="login-form">
-            <IonContent className="ion-padding">
-                <IonText color="muted">
-                    <h2> Bem-Vindo(a) : </h2>
-                </IonText>
-                <form onSubmit={handleSubmit(loginUser)}>
-                    {/* EMAIL */}
-                    <IonItem>
-                        <IonLabel position="floating">E-mail</IonLabel>
-                        <IonInput
-                            type="email"
-                            {...register("email", {
-                                required: "Email is a required field",
-                                pattern: {
-                                    value: EMAILREGEXP,
-                                    message: "invalid email address",
-                                },
-                            })}
-                        />
-                    </IonItem>
+        <IonPage id='login-form'>
+            <CustomCircle position='top-right' />
+            <IonGrid>
+                <IonRow
+                    className='
+                    main-container
+                    ion-justify-content-center 
+                    ion-align-items-center'>
+                    <IonCol>
+                        <IonRow className='ion-justify-content-center'>
+                            <img
+                                src='/assets/imgs/login.svg'
+                                alt='login-img'
+                                className='login-logo'
+                            />
+                        </IonRow>
 
-                    {/* PASSWORD */}
-                    <IonItem>
-                        <IonLabel position="floating">Senha</IonLabel>
-                        <IonInput
-                            type="password"
-                            {...register("password", {
-                                required: "Password is a required field",
-                            })}
-                        />
-                    </IonItem>
+                        <IonText color='muted' className='ion-text-center'>
+                            <h2 className='login-title'> Bem-vindo(a)! </h2>
+                        </IonText>
+                        <form onSubmit={handleSubmit(loginUser)}>
+                            {/* EMAIL */}
+                            <IonItem className='ion-margin-vertical'>
+                                <IonLabel position='floating'>E-mail</IonLabel>
+                                <IonInput
+                                    type='email'
+                                    {...register('email', {
+                                        required: 'Email is a required field',
+                                        pattern: {
+                                            value: EMAILREGEXP,
+                                            message: 'invalid email address',
+                                        },
+                                    })}
+                                />
+                            </IonItem>
 
-                    {/* <IonItem>
-                        <IonLabel>Remember me</IonLabel>
-                        <IonCheckbox defaultChecked={true} slot="start" />
-                    </IonItem> */}
+                            {/* PASSWORD */}
+                            <IonItem className='ion-margin-vertical'>
+                                <IonLabel position='floating'>Senha</IonLabel>
+                                <IonInput
+                                    type='password'
+                                    {...register('password', {
+                                        required: 'Password is a required field',
+                                    })}
+                                />
+                            </IonItem>
 
-                    <IonButton
-                        className="ion-margin-top"
-                        type="submit"
-                        expand="block"
-                    >
-                        Login
-                    </IonButton>
-                </form>
-            </IonContent>
+                            <IonButton className='ion-margin-top' type='submit' expand='block'>
+                                Login
+                            </IonButton>
+                        </form>
+                    </IonCol>
+                </IonRow>
+            </IonGrid>
         </IonPage>
     );
 };

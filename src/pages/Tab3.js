@@ -1,5 +1,4 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-
 const Tab3 = () => {
   return (
     <IonPage>
@@ -9,9 +8,9 @@ const Tab3 = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
+        <IonHeader collapse='condense'>
           <IonToolbar>
-            <IonTitle size="large">Tab 3</IonTitle>
+            <IonTitle size='large'>Tab 3</IonTitle>
           </IonToolbar>
         </IonHeader>
       </IonContent>

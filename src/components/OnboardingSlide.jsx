@@ -1,7 +1,7 @@
-import { IonSlide, IonButton, IonGrid, IonRow, IonCol } from "@ionic/react";
-import "./Onboarding.css";
+import { IonSlide, IonButton, IonGrid, IonRow, IonCol } from '@ionic/react';
+import './Onboarding.css';
 
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 
 const OnboardingSlide = ({
 	image,
@@ -16,18 +16,15 @@ const OnboardingSlide = ({
 
 	return (
 		<IonSlide>
-			<IonGrid className="ion-justify-content-center ion-align-items-center ion-align-self-center">
-				<IonRow className="slide-content-container">
-					<IonCol size="12" className="slide-content">
-						<img src={image} className="slide-main-image" />
+			<IonGrid className='ion-justify-content-center ion-align-items-center ion-align-self-center'>
+				<IonRow className='slide-content-container'>
+					<IonCol size='12' className='slide-content'>
+						<img src={image} className='slide-main-image' />
 						<h1>{title}</h1>
 						<p>{text}</p>
 
 						{mainSlide && (
-							<IonButton
-								expand="block"
-								onClick={() => sliderRef.current.slideNext()}
-							>
+							<IonButton expand='block' onClick={() => sliderRef.current.slideNext()}>
 								COMEÇAR &rarr;
 							</IonButton>
 						)}
@@ -35,11 +32,10 @@ const OnboardingSlide = ({
 						{finalSlide && (
 							<>
 								<IonButton
-									expand="block"
+									expand='block'
 									onClick={async () => {
-										history.replace("/login");
-									}}
-								>
+										history.replace('/login');
+									}}>
 									Login
 								</IonButton>
 							</>
