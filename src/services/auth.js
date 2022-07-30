@@ -57,7 +57,7 @@ export const AuthProvider = (props) => {
 					user: user,
 				});
 			} else {
-				console.log("user not actually found");
+				console.log("user not found");
 				setAuthInfo({
 					initialized: true,
 					loggedIn: false,
@@ -65,23 +65,16 @@ export const AuthProvider = (props) => {
 				});
 			}
 		});
-		// const current = auth.currentUser;
-		// if (current) {
-		// 	console.log("user found");
-		// 	setAuthInfo({
-		// 		initialized: true,
-		// 		loggedIn: true,
-		// 		user: current,
-		// 	});
-		// } else {
-		// 	console.log("no user found");
-		// 	setAuthInfo({
-		// 		initialized: true,
-		// 		loggedIn: false,
-		// 		user: null,
-		// 	});
-		// }
-		// console.log("authInfo initialized");
+	};
+
+	const checkFirstAccess = () => {
+		let response = window.localStorage.getItem("HAS_ACCESSED") || false;
+		if (response == false) {
+			console.log("Its your first access");
+			window.localStorage.setItem("HAS_ACCESSED", true);
+		}
+
+		return response;
 	};
 
 	let v = {
@@ -89,6 +82,7 @@ export const AuthProvider = (props) => {
 		logOut: logOut,
 		logIn: logIn,
 		initializeAuth,
+		checkFirstAccess,
 	};
 
 	return <AuthContext.Provider value={v} {...props} />;

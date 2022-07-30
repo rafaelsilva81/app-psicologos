@@ -7,7 +7,7 @@ import {
     IonPage,
     IonText,
 } from "@ionic/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../services/auth";
 
@@ -24,7 +24,14 @@ const initialValues = {
 };
 
 const LoginPage = ({ history }) => {
-    let { logIn } = useAuth();
+    let { logIn, checkFirstAccess } = useAuth();
+
+    useEffect(() => {
+        let hasAcessed = checkFirstAccess();
+        if (hasAcessed === false) {
+            history.replace("/onboarding");
+        }
+    }, [checkFirstAccess]);
 
     const { handleSubmit, control, setValue, register, getValues } = useForm({
         defaultValues: { ...initialValues },

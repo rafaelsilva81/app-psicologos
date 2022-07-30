@@ -1,6 +1,8 @@
+import React from "react";
 import {
   IonApp,
   IonLoading,
+  IonPage,
   setupIonicReact,
   IonIcon,
   IonLabel,
@@ -32,7 +34,7 @@ import "./theme/variables.css";
 
 /* OTHER IMPORTS */
 import { ellipse, triangle, square } from "ionicons/icons";
-import { Redirect, Route } from "react-router";
+import { Redirect, Route, Switch } from "react-router";
 
 import { useEffect } from "react";
 
@@ -42,6 +44,7 @@ import Tab1 from "./pages/Tab1";
 import Tab2 from "./pages/Tab2";
 import Tab3 from "./pages/Tab3";
 import LoginPage from "./pages/LoginPage";
+import OnboardingPage from "./pages/OnboardingPage";
 
 setupIonicReact();
 
@@ -61,25 +64,19 @@ const App = () => {
   } else {
     return (
       <IonApp>
-        <IonReactRouter id="app-routes">
+        <IonReactRouter>
           {authInfo?.loggedIn === true ? (
             <IonTabs id="main-view">
               <IonRouterOutlet>
-                <Route exact path="/tab1">
-                  <Tab1 />
-                </Route>
-                <Route exact path="/tab2">
-                  <Tab2 />
-                </Route>
-                <Route exact path="/tab3">
-                  <Tab3 />
-                </Route>
-                <Redirect exact from="/" to="/tab1" />
+                <Route path="/:tab(tab1)" component={Tab1} exact={true} />
+                <Route path="/:tab(tab2)" component={Tab2} exact={true} />
+                <Route path="/:tab(tab3)" component={Tab3} />
+                <Route exact path="/" render={() => <Redirect to="/tab1" />} />
               </IonRouterOutlet>
 
               {/* TAB BAR LAYOUT - IONIC DEFAULT */}
               <IonTabBar slot="bottom">
-                <IonTabButton tab="tab1" href="/">
+                <IonTabButton tab="tab1" href="/tab1">
                   <IonIcon icon={triangle} />
                   <IonLabel>Tab 1</IonLabel>
                 </IonTabButton>
@@ -98,6 +95,7 @@ const App = () => {
           ) : (
             <>
               <Route exact path="/login" component={LoginPage} />
+              <Route exact path="/onboarding" component={OnboardingPage} />
               <Redirect exact from="/" to="/login" />
             </>
           )}
