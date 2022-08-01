@@ -1,12 +1,6 @@
-import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-
-import { useAuth } from '../services/auth';
-
-import { useHistory } from 'react-router-dom';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 
 const Tab1 = () => {
-  let { logOut } = useAuth();
-  const history = useHistory();
   return (
     <IonPage>
       <IonHeader>

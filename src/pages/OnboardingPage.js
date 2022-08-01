@@ -1,15 +1,8 @@
-import {
-	IonButton,
-	IonContent,
-	IonIcon,
-	IonPage,
-	IonRow,
-	IonSlides,
-} from "@ionic/react";
-import { arrowBack, arrowForward } from "ionicons/icons";
-import React, { useRef, useState } from "react";
-import OnboardingSlide from "../components/OnboardingSlide";
-import CustomCircle from "../components/CustomCircle";
+import { IonButton, IonContent, IonIcon, IonPage, IonRow, IonSlides } from '@ionic/react';
+import { arrowBack, arrowForward } from 'ionicons/icons';
+import React, { useRef, useState } from 'react';
+import OnboardingSlide from '../components/OnboardingSlide';
+import CustomCircle from '../components/CustomCircle';
 
 const OnboardingPage = () => {
 	const sliderRef = useRef();
@@ -18,26 +11,26 @@ const OnboardingPage = () => {
 
 	const slideContent = [
 		{
-			image: "/assets/imgs/onboarding-1.svg",
+			image: '/assets/imgs/onboarding-1.svg',
 			mainSlide: true,
-			title: "<NOME DO APP>",
-			text: "Aplicativo para acompanhamento com o seu Psicólogo",
+			title: '<NOME DO APP>',
+			text: 'Aplicativo para acompanhamento com o seu Psicólogo',
 		},
 		{
-			image: "/assets/imgs/onboarding-2.svg",
-			title: "Organize",
-			text: "Marque suas consultas no conforto de sua casa",
+			image: '/assets/imgs/onboarding-2.svg',
+			title: 'Organize',
+			text: 'Marque suas consultas no conforto de sua casa',
 		},
 		{
-			image: "/assets/imgs/onboarding-3.svg",
-			title: "Expresse",
-			text: "Faça um acompanhamento do seu dia-a-dia através do app",
+			image: '/assets/imgs/onboarding-3.svg',
+			title: 'Expresse',
+			text: 'Faça um acompanhamento do seu dia-a-dia através do app',
 		},
 		{
-			image: "/assets/imgs/onboarding-4.svg",
-			title: "Pronto(a) para começar?",
+			image: '/assets/imgs/onboarding-4.svg',
+			title: 'Pronto(a) para começar?',
 			finalSlide: true,
-			text: "",
+			text: '',
 		},
 	];
 
@@ -50,27 +43,22 @@ const OnboardingPage = () => {
 
 	return (
 		<IonPage>
-			<IonContent fullscreen>
-				<CustomCircle position="top-left" />
-				<CustomCircle
-					position="bottom-right"
-					width="250px"
-					height="150px"
-				/>
+			<IonContent scrollY={false}>
+				<CustomCircle position='top-left' />
+				<CustomCircle position='bottom-right' size='1.5' />
 				<IonSlides
 					style={{
-						backgroundColor: "var(--ion-color-secondary)",
+						backgroundColor: 'var(--ion-color-secondary)',
 					}}
 					onIonSlideWillChange={checkSlides}
 					pager={true}
 					ref={sliderRef}
-					id="slider"
+					id='slider'
 					options={{
-						slidesPerView: "auto",
+						slidesPerView: 'auto',
 						zoom: true,
 						grabCursor: true,
-					}}
-				>
+					}}>
 					{slideContent.map((slide, index) => {
 						return (
 							<OnboardingSlide
@@ -83,23 +71,21 @@ const OnboardingPage = () => {
 					})}
 				</IonSlides>
 
-				<IonRow className="slide-buttons">
+				<IonRow className='slide-buttons'>
 					{!firstSlide && (
 						<IonButton
-							size="large"
-							fill="clear"
-							onClick={() => sliderRef.current.slidePrev()}
-						>
+							size='large'
+							fill='clear'
+							onClick={() => sliderRef.current.slidePrev()}>
 							<IonIcon icon={arrowBack} />
 						</IonButton>
 					)}
 
 					{!lastSlide && (
 						<IonButton
-							size="large"
-							fill="clear"
-							onClick={() => sliderRef.current.slideNext()}
-						>
+							size='large'
+							fill='clear'
+							onClick={() => sliderRef.current.slideNext()}>
 							<IonIcon icon={arrowForward} />
 						</IonButton>
 					)}

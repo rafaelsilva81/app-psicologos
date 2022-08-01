@@ -17,13 +17,13 @@ import {
 	IonToolbar,
 } from '@ionic/react';
 
-import { personCircle, arrowDownCircle } from 'ionicons/icons';
+import { personCircle, arrowDownCircle, logOut as logOutIcon } from 'ionicons/icons';
 
 import { useAuth } from '../services/auth';
 import { useHistory } from 'react-router-dom';
 
 // TODO: CSS PROPRIO PARA ESSA PAGINA
-
+// TODO: COMPONENTIZAÇÃO E OBTER DADOS DO BANCO
 const ProfilePage = () => {
 	let { logOut } = useAuth();
 	const history = useHistory();
@@ -35,14 +35,19 @@ const ProfilePage = () => {
 
 	return (
 		<IonPage>
+			{/* HEADER */}
 			<IonHeader>
 				<IonToolbar>
 					<IonTitle> PERFIL </IonTitle>
 				</IonToolbar>
 			</IonHeader>
+
+			{/* BODY */}
 			<IonContent fullscreen className='ion-padding'>
-				<IonGrid>
-					<IonRow id='profile-info' className='ion-align-items-center ion-margin-bottom'>
+				{/* GRID */}
+				<IonGrid fixed>
+					{/* PROFILE Card */}
+					<IonRow className='ion-align-items-center'>
 						<IonCol size='3' id='profile-img'>
 							<IonIcon style={{ fontSize: '4rem' }} icon={personCircle} />
 						</IonCol>
@@ -55,19 +60,42 @@ const ProfilePage = () => {
 							</IonRow>
 						</IonCol>
 					</IonRow>
-					<IonButton expand='block' onClick={handleLogout}>
-						LOGOUT
-					</IonButton>
-					<IonRow id='contract-info' className='ion-align-items-center ion-margin-top'>
+
+					{/* LOGOUT Button */}
+					<IonRow>
+						<IonCol>
+							<IonButton expand='full' onClick={handleLogout}>
+								LOGOUT
+								<IonIcon slot='end' icon={logOutIcon} />
+							</IonButton>
+						</IonCol>
+					</IonRow>
+
+					{/* EDIT Button*/}
+					<IonRow>
+						<IonCol size='6'>
+							<IonButton expand='full' fill='outline' size='small' href='#'>
+								Alterar dados
+							</IonButton>
+						</IonCol>
+						<IonCol size='6'>
+							<IonButton expand='full' fill='outline' size='small' href='#'>
+								Alterar senha
+							</IonButton>
+						</IonCol>
+					</IonRow>
+
+					{/* CONTRACT Card*/}
+					<IonRow className='ion-align-items-center'>
 						<IonCol>
 							<IonRow>
+								{/* TODO: Melhorar isso aqui */}
 								<IonItemDivider>
-									<IonLabel id='section-title'> Dados do Psicólogo </IonLabel>
+									<IonLabel> Dados do Psicólogo </IonLabel>
 								</IonItemDivider>
 							</IonRow>
 							<IonRow class='ion-margin'>
 								<IonText className='medic-name'> Nome do Psicólogo </IonText>
-								<IonText className='medic-name'> CRP: XX/XXXXXX </IonText>
 							</IonRow>
 							<IonButton
 								expand='block'
@@ -76,7 +104,7 @@ const ProfilePage = () => {
 								onClick={() => {
 									console.log('Pagina de contato em construção');
 								}}>
-								Baixar Contrato <IonIcon icon={arrowDownCircle} />
+								Baixar Contrato <IonIcon slot='end' icon={arrowDownCircle} />
 							</IonButton>
 						</IonCol>
 					</IonRow>

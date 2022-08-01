@@ -1,3 +1,5 @@
+// Ionic and React
+import React, { useEffect } from 'react';
 import {
     IonButton,
     IonCol,
@@ -7,27 +9,21 @@ import {
     IonLabel,
     IonPage,
     IonRow,
+    IonSpinner,
     IonText,
 } from '@ionic/react';
-import React, { useEffect } from 'react';
+
+// Form and Validation
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
+
+// Authentication
 import { useAuth } from '../services/auth';
+
+// Components and custom CSS
 import CustomCircle from '../components/CustomCircle';
 import './login.css';
-
-// import loginSvg from "/assets/imgs/login.svg";
-
-/* TODO: Ler isso aqui, adicionar validação e melhorar design */
-// TODO: Remover unused imports
-// TODO: Melhorar o login incorreto
-/* https://stackblitz.com/edit/ionic-react-hook-form-me1pv4?file=src%2FApp.tsx*/
-
-const EMAILREGEXP = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-
-const initialValues = {
-    email: '',
-    password: '',
-};
 
 const LoginPage = ({ history }) => {
     let { logIn, checkFirstAccess } = useAuth();
@@ -39,17 +35,31 @@ const LoginPage = ({ history }) => {
         }
     }, [checkFirstAccess, history]);
 
-    // const { handleSubmit, control, setValue, register, getValues } = useForm({
-    //     defaultValues: { ...initialValues },
-    // });
-
-    const { handleSubmit, register } = useForm({
-        defaultValues: { ...initialValues },
+    const validationSchema = Yup.object().shape({
+        email: Yup.string()
+            .email('O e-mail não tem um formato válido')
+            .max(255)
+            .required('O campo e-mail é obrigatório'),
+        password: Yup.string().max(255).required('O campnho senha é obrigatório'),
     });
 
-    const loginUser = async (data) => {
-        await logIn(data);
-        history.replace('/tab1');
+    const {
+        register,
+        handleSubmit,
+        setError,
+        formState: { errors, isSubmitting },
+    } = useForm({
+        resolver: yupResolver(validationSchema),
+    });
+
+    const loginUser = (data) => {
+        logIn(data)
+            .then(() => {
+                history.replace('/home');
+            })
+            .catch((error) => {
+                setError('apiError', { message: error });
+            });
     };
 
     return (
@@ -75,33 +85,38 @@ const LoginPage = ({ history }) => {
                         </IonText>
                         <form onSubmit={handleSubmit(loginUser)}>
                             {/* EMAIL */}
-                            <IonItem className='ion-margin-vertical'>
+                            <IonItem>
                                 <IonLabel position='floating'>E-mail</IonLabel>
-                                <IonInput
-                                    type='email'
-                                    {...register('email', {
-                                        required: 'Email is a required field',
-                                        pattern: {
-                                            value: EMAILREGEXP,
-                                            message: 'invalid email address',
-                                        },
-                                    })}
-                                />
+                                <IonInput type='email' {...register('email')} />
                             </IonItem>
+                            <div className='invalid-feedback'>{errors.email?.message}</div>
 
                             {/* PASSWORD */}
-                            <IonItem className='ion-margin-vertical'>
+                            <IonItem>
                                 <IonLabel position='floating'>Senha</IonLabel>
-                                <IonInput
-                                    type='password'
-                                    {...register('password', {
-                                        required: 'Password is a required field',
-                                    })}
-                                />
+                                <IonInput type='password' {...register('password')} />
                             </IonItem>
+                            <div className='invalid-feedback'>{errors.password?.message}</div>
 
-                            <IonButton className='ion-margin-top' type='submit' expand='block'>
+                            <IonButton
+                                disabled={isSubmitting}
+                                className='ion-margin-top'
+                                type='submit'
+                                expand='block'>
+                                {isSubmitting && <IonSpinner name='bubbles' />}
                                 Login
+                            </IonButton>
+
+                            <IonRow className='ion-justify-content-center'>
+                                {errors.apiError && (
+                                    <div className='invalid-feedback ion-text-center'>
+                                        {errors.apiError?.message}
+                                    </div>
+                                )}
+                            </IonRow>
+
+                            <IonButton fill='clear' color='secondary' expand='block' href='#'>
+                                Esqueci a Senha
                             </IonButton>
                         </form>
                     </IonCol>

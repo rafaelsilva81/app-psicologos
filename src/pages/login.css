@@ -3,6 +3,12 @@
 	margin: 0;
 }
 
+.invalid-feedback {
+	color: var(--ion-color-danger);
+	margin: 0.5em 0;
+	padding: 0;
+}
+
 .login-title {
 	font-weight: 600;
 }

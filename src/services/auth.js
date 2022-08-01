@@ -7,42 +7,44 @@ import {
 	signInWithEmailAndPassword,
 	signOut,
 } from 'firebase/auth';
+import { getMessage } from './customErrorHandler';
 
 const auth = getAuth(app);
 
 export const AuthContext = createContext();
 
 export const AuthProvider = (props) => {
+	setPersistence(auth, browserLocalPersistence);
 	const [authInfo, setAuthInfo] = useState();
 
-	const logIn = async (data) => {
-		await setPersistence(auth, browserLocalPersistence);
-		const { email, password } = data;
-		await signInWithEmailAndPassword(auth, email, password)
-			.then((userCredential) => {
-				// Signed in
-				const user = userCredential.user;
-				console.log('Logado com sucesso');
-				setAuthInfo({ initialized: true, loggedIn: true, user: user });
-				return true;
-			})
-			.catch((error) => {
-				console.log(error.message + ' / COD: ' + error.code);
-				return error.message;
-			});
+	const logIn = (data) => {
+		return new Promise((resolve, reject) => {
+			signInWithEmailAndPassword(auth, data.email, data.password)
+				.then((userCredential) => {
+					// Signed in
+					const user = userCredential.user;
+					console.log('Logado com sucesso');
+					setAuthInfo({ initialized: true, loggedIn: true, user: user });
+					resolve(user);
+				})
+				.catch((error) => {
+					reject(getMessage(error.code));
+				});
+		});
 	};
 
-	const logOut = async () => {
-		await signOut(auth)
-			.then(() => {
-				console.log('DESLOGADO');
-				setAuthInfo({ initialized: true, loggedIn: false, user: null });
-				return true;
-			})
-			.catch((error) => {
-				console.log(error.message);
-				return false;
-			});
+	const logOut = () => {
+		return new Promise((resolve, reject) => {
+			signOut(auth)
+				.then(() => {
+					console.log('Deslogado com sucesso');
+					setAuthInfo({ initialized: true, loggedIn: false, user: null });
+					resolve(true);
+				})
+				.catch((error) => {
+					resolve(getMessage(error.code));
+				});
+		});
 	};
 
 	// TODO: ARRUMAR ESSA FUNÇÃO

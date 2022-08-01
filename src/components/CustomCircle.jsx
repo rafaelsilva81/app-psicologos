@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 const BaseCircle = styled.div`
 	position: absolute;
-	height: ${(props) => (props.height ? props.height : '100px')};
-	width: ${(props) => (props.width ? props.width : '200px')};
+	height: ${(props) => (props.size ? props.size * 100 + 'px' : '100px')};
+	width: ${(props) => (props.size ? props.size * 200 + 'px' : '200px')};
 	border-radius: 50%;
 	background-color: ${(props) =>
 		props.secondary ? `var(--ion-color-secondary)` : `var(--ion-color-primary-tint)`};
@@ -13,25 +13,25 @@ const BaseCircle = styled.div`
 `;
 
 const TopLeftCircle = styled(BaseCircle)`
-	transform: translate(-45%, -45%) rotate(135deg);
+	transform: translate(-50%, -50%) rotate(135deg);
 	top: 0;
 	left: 0;
 `;
 
 const TopRightCircle = styled(BaseCircle)`
-	transform: translate(45%, -45%) rotate(-135deg);
+	transform: translate(50%, -50%) rotate(-135deg);
 	top: 0;
 	right: 0;
 `;
 
 const BottomLeftCircle = styled(BaseCircle)`
-	transform: translate(-45%, 45%) rotate(45deg);
+	transform: translate(-50%, 50%) rotate(45deg);
 	bottom: 0;
 	left: 0;
 `;
 
 const BottomRightCircle = styled(BaseCircle)`
-	transform: translate(45%, 45%) rotate(-45deg);
+	transform: translate(50%, 50%) rotate(-45deg);
 	bottom: 0;
 	right: 0;
 `;
