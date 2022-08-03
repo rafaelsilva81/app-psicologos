@@ -23,7 +23,7 @@ import { useAuth } from '../services/auth';
 
 // Components and custom CSS
 import CustomCircle from '../components/CustomCircle';
-import './login.css';
+import './styles/login.css';
 
 const LoginPage = ({ history }) => {
     let { logIn, checkFirstAccess } = useAuth();

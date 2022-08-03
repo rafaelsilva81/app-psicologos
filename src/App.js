@@ -39,12 +39,12 @@ import { useEffect } from 'react';
 
 import { useAuth } from './services/auth';
 
-import Tab1 from './pages/Tab1';
-import Tab2 from './pages/Tab2';
-import Tab3 from './pages/Tab3';
+import HomePage from './pages/tabs/HomePage';
+import Tab2 from './pages/tabs/Tab2';
+import Tab3 from './pages/tabs/Tab3';
+import ProfilePage from './pages/tabs/ProfilePage';
 import LoginPage from './pages/LoginPage';
 import OnboardingPage from './pages/OnboardingPage';
-import ProfilePage from './pages/ProfilePage';
 
 setupIonicReact();
 
@@ -68,7 +68,7 @@ const App = () => {
           {authInfo?.loggedIn === true ? (
             <IonTabs id='main-view'>
               <IonRouterOutlet>
-                <Route path='/:tab(home)' component={Tab1} exact />
+                <Route path='/:tab(home)' component={HomePage} exact />
                 <Route path='/:tab(humor)' component={Tab2} exact />
                 <Route path='/:tab(extras)' component={Tab3} exact />
                 <Route path='/:tab(profile)' component={ProfilePage} exact />

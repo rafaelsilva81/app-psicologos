@@ -1,6 +1,6 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 
-const Tab1 = () => {
+const HomePage = () => {
   return (
     <IonPage>
       <IonHeader>
@@ -19,4 +19,4 @@ const Tab1 = () => {
   );
 };
 
-export default Tab1;
+export default HomePage;
