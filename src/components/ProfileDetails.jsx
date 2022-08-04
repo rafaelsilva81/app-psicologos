@@ -2,7 +2,8 @@ import React from 'react';
 import { IonCol, IonIcon, IonRow, IonText } from '@ionic/react';
 import { personCircle } from 'ionicons/icons';
 
-const ProfileDetails = () => {
+const ProfileDetails = (props) => {
+	const {name, email} = props
 	return (
 		<>
 			<IonCol size='3' id='profile-img'>
@@ -10,10 +11,10 @@ const ProfileDetails = () => {
 			</IonCol>
 			<IonCol>
 				<IonRow>
-					<IonText className='profile-name'>Nome Sobrenome</IonText>
+					<IonText className='profile-name'>{name}</IonText>
 				</IonRow>
 				<IonRow>
-					<IonText className='profile-email'>email@email.com</IonText>
+					<IonText className='profile-email'>{email}</IonText>
 				</IonRow>
 			</IonCol>
 		</>

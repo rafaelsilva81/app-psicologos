@@ -1,50 +1,54 @@
-import { IonSlide, IonButton, IonGrid, IonRow, IonCol } from '@ionic/react';
-import './Onboarding.css';
+import { IonSlide, IonButton, IonGrid, IonRow, IonCol } from "@ionic/react";
+import "./onboarding.css";
 
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 const OnboardingSlide = ({
-	image,
-	mainSlide = false,
-	finalSlide = false,
-	title,
-	text,
-	lastSlide,
-	sliderRef,
+  image,
+  mainSlide = false,
+  finalSlide = false,
+  title,
+  text,
+  lastSlide,
+  sliderRef,
 }) => {
-	const history = useHistory();
+  const history = useHistory();
 
-	return (
-		<IonSlide>
-			<IonGrid className='ion-justify-content-center ion-align-items-center ion-align-self-center'>
-				<IonRow className='slide-content-container'>
-					<IonCol size='12' className='slide-content'>
-						<img src={image} className='slide-main-image' />
-						<h1>{title}</h1>
-						<p>{text}</p>
+  return (
+    <IonSlide>
+      <IonGrid className="ion-justify-content-center ion-align-items-center ion-align-self-center">
+        <IonRow className="slide-content-container">
+          <IonCol size="12" className="slide-content">
+            <img src={image} className="slide-main-image" />
+            <h1>{title}</h1>
+            <p>{text}</p>
 
-						{mainSlide && (
-							<IonButton expand='block' onClick={() => sliderRef.current.slideNext()}>
-								COMEÇAR &rarr;
-							</IonButton>
-						)}
+            {mainSlide && (
+              <IonButton
+                expand="block"
+                onClick={() => sliderRef.current.slideNext()}
+              >
+                COMEÇAR &rarr;
+              </IonButton>
+            )}
 
-						{finalSlide && (
-							<>
-								<IonButton
-									expand='block'
-									onClick={async () => {
-										history.replace('/login');
-									}}>
-									Login
-								</IonButton>
-							</>
-						)}
-					</IonCol>
-				</IonRow>
-			</IonGrid>
-		</IonSlide>
-	);
+            {finalSlide && (
+              <>
+                <IonButton
+                  expand="block"
+                  onClick={async () => {
+                    history.replace("/login");
+                  }}
+                >
+                  Login
+                </IonButton>
+              </>
+            )}
+          </IonCol>
+        </IonRow>
+      </IonGrid>
+    </IonSlide>
+  );
 };
 
 export default OnboardingSlide;

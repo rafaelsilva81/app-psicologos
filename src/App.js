@@ -39,6 +39,7 @@ import { useEffect } from 'react';
 
 import { useAuth } from './services/auth';
 
+import Loader from './components/Loader'
 import HomePage from './pages/tabs/HomePage';
 import Tab2 from './pages/tabs/Tab2';
 import Tab3 from './pages/tabs/Tab3';
@@ -57,9 +58,7 @@ const App = () => {
 
   if (!authInfo || !authInfo.initialized) {
     return (
-      <IonApp>
-        <IonLoading isOpen={true} />
-      </IonApp>
+      <Loader />
     );
   } else {
     return (
