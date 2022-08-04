@@ -47,9 +47,15 @@ import ProfilePage from './pages/tabs/ProfilePage';
 import LoginPage from './pages/LoginPage';
 import OnboardingPage from './pages/OnboardingPage';
 
+import moment from 'moment';
+import 'moment/locale/pt-br';
+
 setupIonicReact();
 
 const App = () => {
+
+  moment().locale('pt-br')
+
   const { authInfo, initializeAuth } = useAuth();
 
   useEffect(() => {

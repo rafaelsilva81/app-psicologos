@@ -28,6 +28,7 @@ import {
 import {
   useFirestore,
   useFirestoreDocDataOnce,
+  useFirestoreDocOnce,
 } from "reactfire";
 
 import '../styles/profile.css'
@@ -44,19 +45,19 @@ const ProfilePage = () => {
   };
 
   const { user } = authInfo;
-  const userRef = doc(useFirestore(), "users", user.email,);
+  const userRef = doc(useFirestore(), "users", user.email);
   const { data: userData } = useFirestoreDocDataOnce(userRef, {
     idField: "email",
-    suspense: true
+    suspense: true //Necessário pra que a aplicação fique suspendida enquanto tudo carrega
   });
 
-  const { data: medicData } = useFirestoreDocDataOnce(userData.medico, {
+  const { data: medicData } = useFirestoreDocDataOnce(userData.medic, {
     idField: "email",
     suspense: true
   })
 
-  const { email, nome: nomeUsuario } = userData
-  const { nome: nomeMedico, contrato } = medicData
+  const { email, name: userName } = userData
+  const { name: medicName, contract } = medicData
 
   return (
     <IonPage>
@@ -73,7 +74,7 @@ const ProfilePage = () => {
         <IonGrid fixed>
           {/* PROFILE CARD */}
           <IonRow className="ion-align-items-center">
-            <ProfileDetails name={nomeUsuario} email={email}></ProfileDetails>
+            <ProfileDetails name={userName} email={email}></ProfileDetails>
           </IonRow>
 
           {/* LOGOUT Button */}
@@ -102,7 +103,7 @@ const ProfilePage = () => {
 
           {/* CONTRACT Card*/}
           <IonRow className="ion-align-items-center">
-            <ContractDetails name={nomeMedico} contract={contrato}> </ContractDetails>
+            <ContractDetails name={medicName} contract={contract}> </ContractDetails>
           </IonRow>
         </IonGrid>
       </IonContent>
