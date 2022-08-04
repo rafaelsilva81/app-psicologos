@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import app from '../firebase.config';
+import {app} from '../firebase.config';
 import {
 	collection,
 	getDocs,
@@ -13,7 +13,8 @@ import { getMessage } from './customErrorHandler';
 
 const db = getFirestore(app);
 
-export const DatabaseContext = createContext();
+export {db}
+/* export const DatabaseContext = createContext();
 
 export const DatabaseProvider = (props) => {
 	// const [authInfo, setAuthInfo] = useState();
@@ -39,3 +40,4 @@ export const DatabaseProvider = (props) => {
 };
 
 export const useDB = () => useContext(DatabaseContext);
+ */

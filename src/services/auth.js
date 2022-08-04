@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import app from '../firebase.config';
+import {app} from '../firebase.config';
 import {
 	browserLocalPersistence,
 	getAuth,
@@ -42,7 +42,7 @@ export const AuthProvider = (props) => {
 					resolve(true);
 				})
 				.catch((error) => {
-					resolve(getMessage(error.code));
+					reject(getMessage(error.code));
 				});
 		});
 	};
