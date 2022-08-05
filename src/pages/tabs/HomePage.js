@@ -1,6 +1,5 @@
 import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import { collection, doc, limit, query, where } from 'firebase/firestore';
-import moment from 'moment';
+import { collection, doc, limit, orderBy, query, where } from 'firebase/firestore';
 import { useFirestore, useFirestoreCollectionData } from 'reactfire';
 import AppointmentTile from '../../components/AppointmentTile';
 import { useAuth } from '../../services/auth';
@@ -10,7 +9,7 @@ const HomePage = () => {
   const { user } = authInfo;
 
   const userRef = doc(useFirestore(), "users", user.email);
-  const q = query(collection(useFirestore(), "appointments"), where('patient', '==', userRef), limit(10))
+  const q = query(collection(useFirestore(), "appointments"), where('patient', '==', userRef), limit(10), orderBy("date", "asc"))
   const { data: appointmentData } = useFirestoreCollectionData(q, {
     suspense: true //Necessário pra que a aplicação fique suspendida enquanto tudo carrega
   });
@@ -40,7 +39,6 @@ const HomePage = () => {
             })
           }
         </IonList>
-
       </IonContent>
     </IonPage>
   );

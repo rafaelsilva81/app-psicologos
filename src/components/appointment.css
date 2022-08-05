@@ -1,0 +1,20 @@
+.review-button {
+    height: 2.5em;
+    width: 8em;
+    font-weight: 600;
+}
+
+.appointment-date {
+    margin: 0.3em 0;
+    font-size: 1.6em;
+    font-weight: 600;
+}
+
+.appointment-hour {
+    display: flex !important;
+    align-items: center;
+}
+
+.appointment-hour span {
+    margin-left: 0.3em;
+}

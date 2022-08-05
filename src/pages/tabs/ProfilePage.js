@@ -1,4 +1,3 @@
-import React from "react";
 import {
   IonButton,
   IonCol,
@@ -8,7 +7,6 @@ import {
   IonHeader,
   IonIcon,
   IonLabel,
-  IonLoading,
   IonPage,
   IonRow,
   IonTitle,
@@ -25,11 +23,7 @@ import ContractDetails from "../../components/ContractDetails";
 import {
   doc,
 } from "firebase/firestore";
-import {
-  useFirestore,
-  useFirestoreDocDataOnce,
-  useFirestoreDocOnce,
-} from "reactfire";
+import { useFirestore, useFirestoreDocDataOnce } from "reactfire";
 
 import '../styles/profile.css'
 // TODO: CSS PROPRIO PARA ESSA PAGINA
