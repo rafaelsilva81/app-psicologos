@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   IonApp,
   IonLoading,
@@ -9,52 +9,56 @@ import {
   IonTabBar,
   IonTabButton,
   IonTabs,
-} from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
+} from "@ionic/react";
+import { IonReactRouter } from "@ionic/react-router";
 
 /* Core CSS required for Ionic components to work properly */
-import '@ionic/react/css/core.css';
+import "@ionic/react/css/core.css";
 
 /* Basic CSS for apps built with Ionic */
-import '@ionic/react/css/normalize.css';
-import '@ionic/react/css/structure.css';
-import '@ionic/react/css/typography.css';
+import "@ionic/react/css/normalize.css";
+import "@ionic/react/css/structure.css";
+import "@ionic/react/css/typography.css";
 
 /* Optional CSS utils that can be commented out */
-import '@ionic/react/css/padding.css';
-import '@ionic/react/css/float-elements.css';
-import '@ionic/react/css/text-alignment.css';
-import '@ionic/react/css/text-transformation.css';
-import '@ionic/react/css/flex-utils.css';
-import '@ionic/react/css/display.css';
+import "@ionic/react/css/padding.css";
+import "@ionic/react/css/float-elements.css";
+import "@ionic/react/css/text-alignment.css";
+import "@ionic/react/css/text-transformation.css";
+import "@ionic/react/css/flex-utils.css";
+import "@ionic/react/css/display.css";
 
 /* Theme variables */
-import './theme/variables.css';
+import "./theme/variables.css";
 
 /* OTHER IMPORTS */
-import { home, happy, addCircle, person } from 'ionicons/icons';
-import { Redirect, Route } from 'react-router';
+import { home, happy, addCircle, person } from "ionicons/icons";
+import { Redirect, Route } from "react-router";
 
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-import { useAuth } from './services/auth';
+import { useAuth } from "./services/auth";
 
-import Loader from './components/Loader'
-import HomePage from './pages/tabs/HomePage';
-import Tab2 from './pages/tabs/Tab2';
-import Tab3 from './pages/tabs/Tab3';
-import ProfilePage from './pages/tabs/ProfilePage';
-import LoginPage from './pages/LoginPage';
-import OnboardingPage from './pages/OnboardingPage';
+import Loader from "./components/Loader";
+import HomePage from "./pages/tabs/HomePage";
+import HumorPage from "./pages/tabs/HumorPage";
+import Tab3 from "./pages/tabs/Tab3";
+import ProfilePage from "./pages/tabs/ProfilePage";
+import LoginPage from "./pages/LoginPage";
+import OnboardingPage from "./pages/OnboardingPage";
+import HumorOnboarding from "./pages/HumorOnboarding";
 
-import moment from 'moment';
-import 'moment/locale/pt-br';
+import moment from "moment";
+import "moment/locale/pt-br";
 
-setupIonicReact();
+setupIonicReact({
+  mode: "ios",
+  animated: true,
+  hardwareBackButton: true,
+});
 
 const App = () => {
-
-  moment().locale('pt-br')
+  moment().locale("pt-br");
 
   const { authInfo, initializeAuth } = useAuth();
 
@@ -63,41 +67,44 @@ const App = () => {
   }, [authInfo, initializeAuth]);
 
   if (!authInfo || !authInfo.initialized) {
-    return (
-      <Loader />
-    );
+    return <Loader />;
   } else {
     return (
       <IonApp>
         <IonReactRouter>
           {authInfo?.loggedIn === true ? (
-            <IonTabs id='main-view'>
+            <IonTabs id="main-view">
               <IonRouterOutlet>
-                <Route path='/:tab(home)' component={HomePage} exact />
-                <Route path='/:tab(humor)' component={Tab2} exact />
-                <Route path='/:tab(extras)' component={Tab3} exact />
-                <Route path='/:tab(profile)' component={ProfilePage} exact />
-                <Route exact path='/' render={() => <Redirect to='/home' />} />
+                <Route path="/home" component={HomePage} exact />
+                <Route path="/humor" component={HumorPage} exact />
+                <Route path="/extras" component={Tab3} exact />
+                <Route path="/profile" component={ProfilePage} exact />
+                <Route
+                  path="/humorOnboarding"
+                  component={HumorOnboarding}
+                  exact
+                />
+                <Route exact path="/" render={() => <Redirect to="/home" />} />
               </IonRouterOutlet>
 
               {/* TAB BAR LAYOUT - IONIC DEFAULT */}
-              <IonTabBar slot='bottom'>
-                <IonTabButton tab='home' href='/home'>
+              <IonTabBar slot="bottom">
+                <IonTabButton tab="home" href="/home">
                   <IonIcon icon={home} />
                   <IonLabel>Home</IonLabel>
                 </IonTabButton>
 
-                <IonTabButton tab='humor' href='/humor'>
+                <IonTabButton tab="humor" href="/humor">
                   <IonIcon icon={happy} />
                   <IonLabel>Humor</IonLabel>
                 </IonTabButton>
 
-                <IonTabButton tab='extras' href='/extras'>
+                <IonTabButton tab="extras" href="/extras">
                   <IonIcon icon={addCircle} />
                   <IonLabel>Extras</IonLabel>
                 </IonTabButton>
 
-                <IonTabButton tab='profile' href='/profile'>
+                <IonTabButton tab="profile" href="/profile">
                   <IonIcon icon={person} />
                   <IonLabel>Perfil</IonLabel>
                 </IonTabButton>
@@ -105,9 +112,9 @@ const App = () => {
             </IonTabs>
           ) : (
             <>
-              <Route exact path='/login' component={LoginPage} />
-              <Route exact path='/onboarding' component={OnboardingPage} />
-              <Redirect exact from='/' to='/login' />
+              <Route exact path="/login" component={LoginPage} />
+              <Route exact path="/onboarding" component={OnboardingPage} />
+              <Redirect exact from="/" to="/login" />
             </>
           )}
         </IonReactRouter>

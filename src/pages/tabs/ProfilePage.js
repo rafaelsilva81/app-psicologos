@@ -13,19 +13,18 @@ import {
   IonToolbar,
 } from "@ionic/react";
 
-import { logOut as logOutIcon } from "ionicons/icons";
+import { logOut as logOutIcon, chevronBack } from "ionicons/icons";
 
 import { useAuth } from "../../services/auth";
 import { useHistory } from "react-router-dom";
 
 import ProfileDetails from "../../components/ProfileDetails";
 import ContractDetails from "../../components/ContractDetails";
-import {
-  doc,
-} from "firebase/firestore";
+import { doc } from "firebase/firestore";
 import { useFirestore, useFirestoreDocDataOnce } from "reactfire";
 
-import '../styles/profile.css'
+import "../styles/profile.css";
+import CustomCircle from "../../components/CustomCircle";
 // TODO: CSS PROPRIO PARA ESSA PAGINA
 // TODO: COMPONENTIZAÇÃO E OBTER DADOS DO BANCO
 const ProfilePage = () => {
@@ -42,16 +41,16 @@ const ProfilePage = () => {
   const userRef = doc(useFirestore(), "users", user.email);
   const { data: userData } = useFirestoreDocDataOnce(userRef, {
     idField: "email",
-    suspense: true //Necessário pra que a aplicação fique suspendida enquanto tudo carrega
+    suspense: true, //Necessário pra que a aplicação fique suspendida enquanto tudo carrega
   });
 
   const { data: medicData } = useFirestoreDocDataOnce(userData.medic, {
     idField: "email",
-    suspense: true
-  })
+    suspense: true,
+  });
 
-  const { email, name: userName } = userData
-  const { name: medicName, contract } = medicData
+  const { email, name: userName } = userData;
+  const { name: medicName, contract } = medicData;
 
   return (
     <IonPage>
@@ -62,8 +61,16 @@ const ProfilePage = () => {
         </IonToolbar>
       </IonHeader>
 
-      {/* BODY */}
-      <IonContent fullscreen className="ion-padding">
+      <IonContent scrollY={false} className="ion-padding">
+        <CustomCircle position="bottom-right" size="0.8" />
+
+        {/* HEADER */}
+        <IonHeader collapse="condense">
+          <IonToolbar>
+            <IonTitle size="large">PERFIL</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+
         {/* GRID */}
         <IonGrid fixed>
           {/* PROFILE CARD */}
@@ -84,12 +91,24 @@ const ProfilePage = () => {
           {/* EDIT Button*/}
           <IonRow>
             <IonCol size="6">
-              <IonButton expand="full" fill="outline" size="small" href="#">
+              <IonButton
+                expand="full"
+                color="secondary"
+                fill="solid"
+                size="small"
+                href="#"
+              >
                 Alterar dados
               </IonButton>
             </IonCol>
             <IonCol size="6">
-              <IonButton expand="full" fill="outline" size="small" href="#">
+              <IonButton
+                expand="full"
+                color="secondary"
+                fill="solid"
+                size="small"
+                href="#"
+              >
                 Alterar senha
               </IonButton>
             </IonCol>
@@ -97,13 +116,18 @@ const ProfilePage = () => {
 
           {/* CONTRACT Card*/}
           <IonRow className="ion-align-items-center">
-            <ContractDetails name={medicName} contract={contract}> </ContractDetails>
+            <ContractDetails
+              name={medicName}
+              contract={contract}
+            ></ContractDetails>
           </IonRow>
         </IonGrid>
       </IonContent>
+
+      {/* TEMPORARY FOOTER */}
       <IonFooter className="ion-margin">
         <IonLabel color="medium" className="app-version">
-          v0.0.5 alpha
+          v1.0.0 alpha
         </IonLabel>
       </IonFooter>
     </IonPage>

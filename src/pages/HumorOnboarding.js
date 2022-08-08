@@ -7,11 +7,12 @@ import {
   IonSlides,
 } from "@ionic/react";
 import { arrowBack, arrowForward } from "ionicons/icons";
-import React, { useRef, useState } from "react";
-import LoginOnboardingSlide from "../components/LoginOnboardingSlide";
+import React, { useEffect, useRef, useState } from "react";
+import { useHistory } from "react-router";
 import CustomCircle from "../components/CustomCircle";
+import HumorOnboardingSlide from "../components/HumorOnboardingSlide";
 
-const OnboardingPage = () => {
+const HumorOnboarding = () => {
   const sliderRef = useRef();
   const [lastSlide, setLastSlide] = useState(false);
   const [firstSlide, setFirstSlide] = useState(true);
@@ -20,18 +21,18 @@ const OnboardingPage = () => {
     {
       image: "/assets/imgs/onboarding/onboarding-1.svg",
       mainSlide: true,
-      title: "<NOME DO APP>",
-      text: "Aplicativo para acompanhamento com o seu Psicólogo",
+      title: "Sua jornada começou!",
+      text: "A partir de agora, acompanhe seu humor, hábitos e atividades",
     },
     {
       image: "/assets/imgs/onboarding/onboarding-2.svg",
-      title: "Organize",
-      text: "Marque suas consultas no conforto de sua casa",
+      title: "Adicione suas atividades do dia-a-dia",
+      text: "Responda quantas vezes quiser para acompanhar seu crescimento",
     },
     {
       image: "/assets/imgs/onboarding/onboarding-3.svg",
-      title: "Expresse",
-      text: "Faça um acompanhamento do seu dia-a-dia através do app",
+      title: "Cultive sua Árvore",
+      text: "Sua árvore representa seus resultados, e ela cresce junto com você",
     },
     {
       image: "/assets/imgs/onboarding/onboarding-4.svg",
@@ -40,6 +41,14 @@ const OnboardingPage = () => {
       text: "",
     },
   ];
+
+  const history = useHistory();
+  useEffect(() => {
+    let r = window.localStorage.getItem("HAS_USED_HUMOR_FEATURE") || false;
+    if (r === true) {
+      history.replace("/humor");
+    }
+  }, [history]);
 
   const checkSlides = async () => {
     const isLastSlide = await sliderRef.current.isEnd();
@@ -51,14 +60,14 @@ const OnboardingPage = () => {
   return (
     <IonPage>
       <IonContent scrollY={false}>
-        <CustomCircle position="top-left" />
-        <CustomCircle position="bottom-right" size="1.5" />
+        <CustomCircle secondary position="top-left" />
+        <CustomCircle secondary position="bottom-right" size="1.5" />
         <IonSlides
           style={{
-            backgroundColor: "var(--ion-color-secondary)",
+            backgroundColor: "var(--ion-color-primary)",
           }}
           onIonSlideWillChange={checkSlides}
-          pager={true}
+          pager={false}
           ref={sliderRef}
           id="slider"
           options={{
@@ -69,12 +78,12 @@ const OnboardingPage = () => {
         >
           {slideContent.map((slide, index) => {
             return (
-              <LoginOnboardingSlide
+              <HumorOnboardingSlide
                 key={index}
                 {...slide}
                 lastSlide={lastSlide}
                 sliderRef={sliderRef}
-                goTo="/login"
+                goTo="/humor"
               />
             );
           })}
@@ -85,6 +94,7 @@ const OnboardingPage = () => {
             <IonButton
               size="large"
               fill="clear"
+              color="secondary"
               onClick={() => sliderRef.current.slidePrev()}
             >
               <IonIcon icon={arrowBack} />
@@ -95,6 +105,7 @@ const OnboardingPage = () => {
             <IonButton
               size="large"
               fill="clear"
+              color="secondary"
               onClick={() => sliderRef.current.slideNext()}
             >
               <IonIcon icon={arrowForward} />
@@ -106,4 +117,4 @@ const OnboardingPage = () => {
   );
 };
 
-export default OnboardingPage;
+export default HumorOnboarding;

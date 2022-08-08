@@ -1,9 +1,9 @@
 import { IonSlide, IonButton, IonGrid, IonRow, IonCol } from "@ionic/react";
-import "./onboarding.css";
+import "./styles/onboarding.css";
 
 import { useHistory } from "react-router-dom";
 
-const OnboardingSlide = ({
+const HumorOnboardingSlide = ({
   image,
   mainSlide = false,
   finalSlide = false,
@@ -26,6 +26,7 @@ const OnboardingSlide = ({
             {mainSlide && (
               <IonButton
                 expand="block"
+                color="secondary"
                 onClick={() => sliderRef.current.slideNext()}
               >
                 COMEÇAR &rarr;
@@ -33,16 +34,16 @@ const OnboardingSlide = ({
             )}
 
             {finalSlide && (
-              <>
-                <IonButton
-                  expand="block"
-                  onClick={async () => {
-                    history.replace("/login");
-                  }}
-                >
-                  Login
-                </IonButton>
-              </>
+              <IonButton
+                color="secondary"
+                expand="block"
+                onClick={async () => {
+                  window.localStorage.setItem("HAS_USED_HUMOR_FEATURE", true);
+                  history.replace("/humor");
+                }}
+              >
+                Vamos lá!
+              </IonButton>
             )}
           </IonCol>
         </IonRow>
@@ -51,4 +52,4 @@ const OnboardingSlide = ({
   );
 };
 
-export default OnboardingSlide;
+export default HumorOnboardingSlide;

@@ -1,4 +1,5 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import ReactAudioPlayer from 'react-audio-player';
 const Tab3 = () => {
   return (
     <IonPage>
