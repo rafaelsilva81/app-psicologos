@@ -4,6 +4,14 @@
     font-weight: 600;
 }
 
+
+.overme {
+    overflow:hidden !important; 
+    white-space:nowrap !important; 
+    text-overflow: ellipsis !important;
+    color: red;
+}
+
 .appointment-information {
     padding: 0.8em
 }

@@ -3,6 +3,7 @@ import { app } from "../firebase.config";
 import {
   browserLocalPersistence,
   getAuth,
+  sendPasswordResetEmail,
   setPersistence,
   signInWithEmailAndPassword,
   signOut,
@@ -15,6 +16,19 @@ export const AuthContext = createContext();
 
 export const AuthProvider = (props) => {
   const [authInfo, setAuthInfo] = useState();
+
+  const resetPassword = (data) => {
+    return new Promise((resolve, reject) => {
+      sendPasswordResetEmail(auth, data.email)
+        .then(() => {
+          console.log("Email enviado");
+          resolve(true);
+        })
+        .catch((error) => {
+          reject(getMessage(error.code));
+        });
+    });
+  };
 
   const logIn = (data) => {
     return new Promise((resolve, reject) => {
@@ -80,6 +94,7 @@ export const AuthProvider = (props) => {
 
   let v = {
     authInfo,
+    resetPassword: resetPassword,
     logOut: logOut,
     logIn: logIn,
     initializeAuth,

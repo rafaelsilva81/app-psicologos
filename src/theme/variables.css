@@ -7,6 +7,8 @@ http://ionicframework.com/docs/theming/ */
 
 :root {
   
+  --ion-padding: 12px;
+
   --ion-font-family: -apple-system, BlinkMacSystemFont, 'Fira Sans', 'Roboto', 'Oxygen',
   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
   sans-serif;

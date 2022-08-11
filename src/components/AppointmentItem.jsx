@@ -29,16 +29,16 @@ function AppointmentItem(props) {
       <IonCardContent className="appointment-information">
         <IonRow className="ion-align-items-center">
           <IonCol size="3">
-            <IonLabel className="appointment-hour">
+            <div className="ion-text-wrap">
               <IonIcon icon={time} />
               <span> {formatedHour} </span>
-            </IonLabel>
+            </div>
           </IonCol>
           <IonCol size="9" className="ion-text-end">
-            <IonLabel className="appointment-location">
+            <div className="ion-text-wrap">
               <IonIcon icon={locationIcon} />
-              <span> {location} </span>
-            </IonLabel>
+              <IonLabel className="ion-text-wrap"> {location} </IonLabel>
+            </div>
           </IonCol>
         </IonRow>
       </IonCardContent>

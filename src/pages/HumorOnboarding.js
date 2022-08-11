@@ -12,6 +12,13 @@ import { useHistory } from "react-router";
 import CustomCircle from "../components/CustomCircle";
 import HumorOnboardingSlide from "../components/HumorOnboardingSlide";
 
+/* Imagens */
+// @TODO mudar essas imagens
+import humorOnboarding1 from "../assets/imgs/onboarding-1.svg";
+import humorOnboarding2 from "../assets/imgs/onboarding-2.svg";
+import humorOnboarding3 from "../assets/imgs/onboarding-3.svg";
+import humorOnboarding4 from "../assets/imgs/onboarding-4.svg";
+
 const HumorOnboarding = () => {
   const sliderRef = useRef();
   const [lastSlide, setLastSlide] = useState(false);
@@ -19,23 +26,23 @@ const HumorOnboarding = () => {
 
   const slideContent = [
     {
-      image: "/assets/imgs/onboarding/onboarding-1.svg",
+      image: humorOnboarding1,
       mainSlide: true,
       title: "Sua jornada começou!",
       text: "A partir de agora, acompanhe seu humor, hábitos e atividades",
     },
     {
-      image: "/assets/imgs/onboarding/onboarding-2.svg",
+      image: humorOnboarding2,
       title: "Adicione suas atividades do dia-a-dia",
       text: "Responda quantas vezes quiser para acompanhar seu crescimento",
     },
     {
-      image: "/assets/imgs/onboarding/onboarding-3.svg",
+      image: humorOnboarding3,
       title: "Cultive sua Árvore",
       text: "Sua árvore representa seus resultados, e ela cresce junto com você",
     },
     {
-      image: "/assets/imgs/onboarding/onboarding-4.svg",
+      image: humorOnboarding4,
       title: "Pronto(a) para começar?",
       finalSlide: true,
       text: "",

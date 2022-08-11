@@ -1,0 +1,48 @@
+.activity-text {
+    margin-left: 1em;
+}
+
+.activity-container {
+    padding: 0.5em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.activity-container > div{
+    margin: 0.3em;
+}
+
+.humor-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.test-radio {
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    --color:transparent;
+    --color-checked: transparent;
+}
+
+.radio-checked {
+    background-color: red;
+}
+
+
+.test-radio-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.test-radio-item {
+    margin: 0 20px;
+    background-color: transparent;
+}
