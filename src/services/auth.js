@@ -2,11 +2,14 @@ import React, { createContext, useContext, useState } from "react";
 import { app } from "../firebase.config";
 import {
   browserLocalPersistence,
+  EmailAuthProvider,
   getAuth,
+  reauthenticateWithCredential,
   sendPasswordResetEmail,
   setPersistence,
   signInWithEmailAndPassword,
   signOut,
+  updatePassword,
 } from "firebase/auth";
 import { getMessage } from "./customErrorHandler";
 
@@ -17,9 +20,37 @@ export const AuthContext = createContext();
 export const AuthProvider = (props) => {
   const [authInfo, setAuthInfo] = useState();
 
-  const resetPassword = (data) => {
+  const reauthenticateUser = (email, pass) => {
     return new Promise((resolve, reject) => {
-      sendPasswordResetEmail(auth, data.email)
+      reauthenticateWithCredential(
+        auth.currentUser,
+        EmailAuthProvider.credential(email, pass)
+      )
+        .then(() => {
+          resolve(true);
+        })
+        .catch((error) => {
+          console.log(error);
+          reject(getMessage(error.code));
+        });
+    });
+  };
+
+  const changePassword = (newPass) => {
+    return new Promise((resolve, reject) => {
+      updatePassword(auth.currentUser, newPass)
+        .then(() => {
+          resolve(true);
+        })
+        .catch((error) => {
+          console.log(error);
+          reject(getMessage(error.code));
+        });
+    });
+  };
+  const resetPassword = ({ email }) => {
+    return new Promise((resolve, reject) => {
+      sendPasswordResetEmail(auth, email)
         .then(() => {
           console.log("Email enviado");
           resolve(true);
@@ -30,9 +61,9 @@ export const AuthProvider = (props) => {
     });
   };
 
-  const logIn = (data) => {
+  const logIn = ({ email, password }) => {
     return new Promise((resolve, reject) => {
-      signInWithEmailAndPassword(auth, data.email, data.password)
+      signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
@@ -97,6 +128,8 @@ export const AuthProvider = (props) => {
     resetPassword: resetPassword,
     logOut: logOut,
     logIn: logIn,
+    changePassword: changePassword,
+    reauthenticateUser,
     initializeAuth,
     checkFirstAccess,
   };

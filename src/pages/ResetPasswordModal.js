@@ -60,6 +60,7 @@ const ResetPasswordModal = ({ onDismiss }) => {
       <IonContent className="ion-padding">
         <form onSubmit={handleSubmit(finishForm)}>
           <h3 className="ion-margin-start"> REDEFINIR SENHA </h3>
+
           <IonItem
             lines="full"
             className="ion-margin-horizontal ion-margin-top"

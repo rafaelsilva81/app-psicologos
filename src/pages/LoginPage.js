@@ -123,14 +123,19 @@ const LoginPage = ({ history }) => {
               {/* EMAIL */}
               <IonItem>
                 <IonLabel position="floating">E-mail</IonLabel>
-                <IonInput type="email" {...register("email")} />
+                <IonInput required type="email" {...register("email")} />
               </IonItem>
               <div className="invalid-feedback">{errors.email?.message}</div>
 
               {/* PASSWORD */}
               <IonItem>
                 <IonLabel position="floating">Senha</IonLabel>
-                <IonInput type="password" {...register("password")} />
+                <IonInput
+                  required
+                  clearOnEdit={false}
+                  type="password"
+                  {...register("password")}
+                />
               </IonItem>
               <div className="invalid-feedback">{errors.password?.message}</div>
 

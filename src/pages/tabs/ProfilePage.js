@@ -11,6 +11,8 @@ import {
   IonRow,
   IonTitle,
   IonToolbar,
+  useIonAlert,
+  useIonModal,
 } from "@ionic/react";
 
 import { logOut as logOutIcon, chevronBack } from "ionicons/icons";
@@ -25,16 +27,22 @@ import { useFirestore, useFirestoreDocDataOnce } from "reactfire";
 
 import "../styles/profile.css";
 import CustomCircle from "../../components/CustomCircle";
+import ChangePassModal from "../ChangePassModal";
+
 // TODO: CSS PROPRIO PARA ESSA PAGINA
 // TODO: COMPONENTIZAÇÃO E OBTER DADOS DO BANCO
+
 const ProfilePage = () => {
-  const { authInfo, logOut } = useAuth();
+  const [presentAlert] = useIonAlert();
+
+  const { authInfo, logOut, changePassword, reauthenticateUser } = useAuth();
 
   const history = useHistory();
 
   const handleLogout = async () => {
     await logOut();
-    history.replace("/login");
+    history.push(".");
+    window.location.reload();
   };
 
   const { user } = authInfo;
@@ -51,6 +59,39 @@ const ProfilePage = () => {
 
   const { email, name: userName } = userData;
   const { name: medicName, contract } = medicData;
+
+  const [present, dismiss] = useIonModal(ChangePassModal, {
+    onDismiss: (data, role) => dismiss(data, role),
+  });
+
+  function openPassChangePage() {
+    present({
+      onWillDismiss: (ev) => {
+        if (ev.detail.role === "confirm") {
+          const { oldPass, newPass } = ev.detail.data;
+          const { email } = user;
+          reauthenticateUser(email, oldPass)
+            .then(() => {
+              changePassword(newPass).then(() => {
+                presentAlert({
+                  header: "ALTERAÇÃO DE SENHA",
+                  message: "Senha alterada com sucesso.",
+                  buttons: ["OK"],
+                });
+              });
+            })
+            .catch((error) => {
+              presentAlert({
+                header: "ALTERAÇÃO DE SENHA",
+                message:
+                  "Não foi possível alterar a Senha, verífique se você informou os dados corretamente.",
+                buttons: ["OK"],
+              });
+            });
+        }
+      },
+    });
+  }
 
   return (
     <IonPage>
@@ -107,7 +148,7 @@ const ProfilePage = () => {
                 color="secondary"
                 fill="solid"
                 size="small"
-                href="#"
+                onClick={() => openPassChangePage()}
               >
                 Alterar senha
               </IonButton>

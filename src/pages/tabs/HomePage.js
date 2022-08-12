@@ -32,6 +32,7 @@ const HomePage = () => {
     limit(10),
     orderBy("date", "asc")
   );
+
   const { data: appointmentData } = useFirestoreCollectionData(q, {
     suspense: true, //Necessário pra que a aplicação fique suspendida enquanto tudo carrega
   });
