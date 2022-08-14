@@ -15,19 +15,20 @@ import {
   useIonModal,
 } from "@ionic/react";
 
-import { logOut as logOutIcon, chevronBack } from "ionicons/icons";
+import { logOut as logOutIcon } from "ionicons/icons";
 
 import { useAuth } from "../../services/auth";
 import { useHistory } from "react-router-dom";
 
 import ProfileDetails from "../../components/ProfileDetails";
 import ContractDetails from "../../components/ContractDetails";
-import { doc } from "firebase/firestore";
-import { useFirestore, useFirestoreDocDataOnce } from "reactfire";
+import { doc, updateDoc } from "firebase/firestore";
+import { useFirestore, useFirestoreDocData } from "reactfire";
 
 import "../styles/profile.css";
 import CustomCircle from "../../components/CustomCircle";
-import ChangePassModal from "../ChangePassModal";
+import EditPassModal from "../EditPassModal";
+import EditDataModal from "../EditDataModal";
 
 // TODO: CSS PROPRIO PARA ESSA PAGINA
 // TODO: COMPONENTIZAÇÃO E OBTER DADOS DO BANCO
@@ -39,33 +40,28 @@ const ProfilePage = () => {
 
   const history = useHistory();
 
-  const handleLogout = async () => {
-    await logOut();
-    history.push(".");
-    window.location.reload();
-  };
-
   const { user } = authInfo;
   const userRef = doc(useFirestore(), "users", user.email);
-  const { data: userData } = useFirestoreDocDataOnce(userRef, {
+
+  const { data: userData } = useFirestoreDocData(userRef, {
     idField: "email",
     suspense: true, //Necessário pra que a aplicação fique suspendida enquanto tudo carrega
   });
 
-  const { data: medicData } = useFirestoreDocDataOnce(userData.medic, {
+  const { data: medicData } = useFirestoreDocData(userData.medic, {
     idField: "email",
     suspense: true,
   });
 
-  const { email, name: userName } = userData;
+  const { email, name: userName, gender } = userData;
   const { name: medicName, contract } = medicData;
 
-  const [present, dismiss] = useIonModal(ChangePassModal, {
-    onDismiss: (data, role) => dismiss(data, role),
+  const [presentPassPage, dismissPassPage] = useIonModal(EditPassModal, {
+    onDismiss: (data, role) => dismissPassPage(data, role),
   });
 
   function openPassChangePage() {
-    present({
+    presentPassPage({
       onWillDismiss: (ev) => {
         if (ev.detail.role === "confirm") {
           const { oldPass, newPass } = ev.detail.data;
@@ -92,6 +88,41 @@ const ProfilePage = () => {
       },
     });
   }
+
+  const [presentEditData, dismissEditData] = useIonModal(EditDataModal, {
+    onDismiss: (data, role) => dismissEditData(data, role),
+    userData: { email, userName, gender },
+  });
+
+  function openDataEditPage() {
+    presentEditData({
+      onWillDismiss: async (ev) => {
+        if (ev.detail.role === "confirm") {
+          const { newMail, newName, newGender } = ev.detail.data;
+          await updateDoc(
+            userRef,
+            {
+              email: newMail,
+              name: newName,
+              gender: newGender,
+            },
+            { merge: true }
+          );
+          presentAlert({
+            header: "ALTERAÇÃO DE DADOS",
+            message: "Dados alterados com sucesso.",
+            buttons: ["OK"],
+          });
+        }
+      },
+    });
+  }
+
+  const handleLogout = async () => {
+    await logOut();
+    history.push(".");
+    window.location.reload();
+  };
 
   return (
     <IonPage>
@@ -137,7 +168,7 @@ const ProfilePage = () => {
                 color="secondary"
                 fill="solid"
                 size="small"
-                href="#"
+                onClick={() => openDataEditPage()}
               >
                 Alterar dados
               </IonButton>
@@ -156,7 +187,7 @@ const ProfilePage = () => {
           </IonRow>
 
           {/* CONTRACT Card*/}
-          <IonRow className="ion-align-items-center">
+          <IonRow className="ion-align-items-center ion-margin-top">
             <ContractDetails
               name={medicName}
               contract={contract}

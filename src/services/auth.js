@@ -1,12 +1,10 @@
-import React, { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { app } from "../firebase.config";
 import {
-  browserLocalPersistence,
   EmailAuthProvider,
   getAuth,
   reauthenticateWithCredential,
   sendPasswordResetEmail,
-  setPersistence,
   signInWithEmailAndPassword,
   signOut,
   updatePassword,

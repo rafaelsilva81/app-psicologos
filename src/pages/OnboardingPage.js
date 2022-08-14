@@ -7,7 +7,7 @@ import {
   IonSlides,
 } from "@ionic/react";
 import { arrowBack, arrowForward } from "ionicons/icons";
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import LoginOnboardingSlide from "../components/LoginOnboardingSlide";
 import CustomCircle from "../components/CustomCircle";
 

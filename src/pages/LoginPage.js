@@ -1,5 +1,5 @@
 // Ionic and React
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import {
   IonButton,
   IonCol,

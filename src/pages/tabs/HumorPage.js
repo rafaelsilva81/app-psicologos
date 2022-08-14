@@ -8,7 +8,6 @@ import {
   IonToolbar,
   IonButton,
   IonIcon,
-  IonText,
   useIonModal,
   useIonAlert,
 } from "@ionic/react";
@@ -27,54 +26,77 @@ import tree3 from "../../assets/imgs/tree-3.svg";
 import tree4 from "../../assets/imgs/tree-4.svg";
 import tree5 from "../../assets/imgs/tree-5.svg";
 
+import { useAuth } from "../../services/auth";
+import { doc, updateDoc } from "firebase/firestore";
+import { useFirestore, useFirestoreDocData } from "reactfire";
+
 const HumorPage = () => {
   const history = useHistory();
 
+  const { authInfo } = useAuth();
+  const { user } = authInfo;
+
   const [presentAlert] = useIonAlert();
 
+  const userRef = doc(useFirestore(), "users", user.email);
   const [treeImg, setTreeImg] = useState(tree1);
-  const [treeLevel, setTreeLevel] = useState(1);
   const [treeExp, setTreeExp] = useState(0);
 
-  useEffect(() => {
-    if (treeExp >= 100 && treeExp < 1000) {
-      setTreeLevel(2);
-    } else if (treeExp >= 1000 && treeExp <= 5000) {
-      setTreeLevel(3);
-    }
+  const { data: userData } = useFirestoreDocData(userRef, {
+    suspense: true, //Necessário pra que a aplicação fique suspendida enquanto tudo carrega
   });
-
-  const [present, dismiss] = useIonModal(HumorFormModal, {
-    onDismiss: (data, role) => dismiss(data, role),
-  });
-
-  function openModal() {
-    present({
-      onWillDismiss: (ev) => {
-        if (ev.detail.role === "confirm") {
-          let points = 0;
-          const { notes, ...activities } = ev.detail.data;
-          notes === "" ? (points += 0) : (points += 100);
-          for (var key of Object.keys(activities)) {
-            if (activities[key] != undefined && activities[key] === true) {
-              points += 100;
-            }
-          }
-
-          if (points > 0) {
-            setTreeExp(treeExp + points);
-          }
-        }
-      },
-    });
-  }
 
   useEffect(() => {
     let r = window.localStorage.getItem("HAS_USED_HUMOR_FEATURE") || false;
     if (r === false) {
       history.replace("/humorOnboarding");
     }
-  }, [history]);
+
+    if (userData.treeExp) {
+      setTreeExp(userData.treeExp);
+    }
+
+    if (treeExp > 100 && treeExp <= 1000) {
+      setTreeImg(tree2);
+    } else if (treeExp > 1000 && treeExp <= 5000) {
+      setTreeImg(tree3);
+    } else if (treeExp > 5000 && treeExp <= 10000) {
+      setTreeImg(tree4);
+    } else if (treeExp > 10000) {
+      setTreeImg(tree5);
+    } else {
+      setTreeImg(tree1);
+    }
+  }, [userData, treeExp, history]);
+
+  /* MODAL */
+  const [present, dismiss] = useIonModal(HumorFormModal, {
+    onDismiss: (data, role) => dismiss(data, role),
+  });
+
+  function openModal() {
+    present({
+      onWillDismiss: async (ev) => {
+        if (ev.detail.role === "confirm") {
+          let points = 0;
+          const { notes, ...activities } = ev.detail.data;
+          notes === "" ? (points += 0) : (points += 100);
+          for (var key of Object.keys(activities)) {
+            if (activities[key] !== undefined && activities[key] === true) {
+              points += 100;
+            }
+          }
+
+          if (points > 0) {
+            console.log(treeExp);
+            await updateDoc(userRef, {
+              treeExp: treeExp + points,
+            });
+          }
+        }
+      },
+    });
+  }
 
   let response = window.localStorage.getItem("HAS_USED_HUMOR_FEATURE") || false;
   if (response === false) {
@@ -99,10 +121,19 @@ const HumorPage = () => {
           </IonHeader>
 
           <IonGrid fixed className="center-grid">
+            {/* DEBUG */}
+            <span
+              className="ion-text-center"
+              style={{ fontSize: "85%", color: "#bbb" }}
+            >
+              (DEBUG) Pontos da Árvore : {treeExp} / 10000 <br />
+            </span>
+
             <IonRow className="ion-align-items-center ion-justify-content-center tree-view">
               <img
                 style={{ background: "var(--ion-color-primary)" }}
                 src={treeImg}
+                alt="sua-arvore"
               />
             </IonRow>
             <IonRow className="ion-align-items-center ion-justify-content-center">

@@ -1,17 +1,23 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ReactAudioPlayer from 'react-audio-player';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+} from "@ionic/react";
+import ReactAudioPlayer from "react-audio-player";
 const Tab3 = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Tab 3</IonTitle>
+          <IonTitle>EXTRAS</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse='condense'>
+      <IonContent fullscreen className="ion-padding">
+        <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size='large'>Tab 3</IonTitle>
+            <IonTitle size="large">EXTRAS</IonTitle>
           </IonToolbar>
         </IonHeader>
       </IonContent>

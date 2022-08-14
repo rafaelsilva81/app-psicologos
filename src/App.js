@@ -1,7 +1,5 @@
-import React from "react";
 import {
   IonApp,
-  IonLoading,
   setupIonicReact,
   IonIcon,
   IonLabel,

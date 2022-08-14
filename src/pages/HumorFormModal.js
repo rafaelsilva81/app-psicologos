@@ -1,29 +1,17 @@
 import {
   IonButton,
   IonButtons,
-  IonCheckbox,
   IonContent,
-  IonGrid,
   IonHeader,
-  IonIcon,
-  IonInput,
   IonItem,
   IonLabel,
   IonPage,
-  IonPopover,
-  IonRadio,
-  IonRadioGroup,
-  IonRow,
   IonSpinner,
-  IonText,
   IonTextarea,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { addCircle } from "ionicons/icons";
-import { Checkbox } from "pretty-checkbox-react";
 import CustomCheckbox from "../components/CustomCheckbox";
 
 import "./styles/humor_modal.css";
@@ -34,23 +22,17 @@ import {
   faHeart,
   faChampagneGlasses,
   faDumbbell,
-  faPersonWalking,
-  faCarrot,
   faTv,
   faBook,
   faGamepad,
   faKitchenSet,
   faBroom,
   faBath,
-  faScissors,
   faBed,
   faPersonPraying,
   faBasketShopping,
   faUmbrellaBeach,
-  faHandHoldingMedical,
-  faBriefcase,
 } from "@fortawesome/free-solid-svg-icons";
-import CustomRadio from "../components/styles/CustomRadio";
 
 /* MODAL */
 const HumorFormModal = ({ onDismiss }) => {
@@ -135,7 +117,6 @@ const HumorFormModal = ({ onDismiss }) => {
   const {
     setValue,
     register,
-    getValues,
     control,
     handleSubmit,
     formState: { isSubmitting },

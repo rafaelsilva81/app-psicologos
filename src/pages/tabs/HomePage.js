@@ -4,10 +4,10 @@ import {
   IonList,
   IonPage,
   IonRefresher,
+  IonRefresherContent,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {
   collection,
   doc,
@@ -20,8 +20,11 @@ import { useFirestore, useFirestoreCollectionData } from "reactfire";
 import AppointmentItem from "../../components/AppointmentItem";
 import CustomCircle from "../../components/CustomCircle";
 import { useAuth } from "../../services/auth";
+import noResultImg from "../../assets/imgs/no_result.svg";
+import { useHistory } from "react-router";
 
 const HomePage = () => {
+  const history = useHistory();
   const { authInfo } = useAuth();
   const { user } = authInfo;
 
@@ -44,9 +47,17 @@ const HomePage = () => {
           <IonTitle>CONSULTAS</IonTitle>
         </IonToolbar>
       </IonHeader>
+      <CustomCircle position="top-right" size="1.2" />
 
       <IonContent fullscreen className="ion-padding">
-        <CustomCircle position="top-right" size="1.2" />
+        <IonRefresher
+          slot="fixed"
+          onIonRefresh={() => {
+            history.go(0);
+          }}
+        >
+          <IonRefresherContent></IonRefresherContent>
+        </IonRefresher>
 
         {/* HEADER */}
         <IonHeader collapse="condense">
@@ -57,16 +68,20 @@ const HomePage = () => {
 
         {/* BODY */}
         <IonList>
-          {appointmentData.map(({ location, date, hasReview }, i) => {
-            return (
-              <AppointmentItem
-                location={location}
-                date={date}
-                hasReview={hasReview}
-                key={i}
-              />
-            );
-          })}
+          {appointmentData.length === 0 ? (
+            <NoResult />
+          ) : (
+            appointmentData.map(({ location, date, hasReview }, i) => {
+              return (
+                <AppointmentItem
+                  location={location}
+                  date={date}
+                  hasReview={hasReview}
+                  key={i}
+                />
+              );
+            })
+          )}
         </IonList>
       </IonContent>
     </IonPage>
@@ -74,3 +89,25 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+const NoResult = () => {
+  return (
+    <div
+      style={{
+        display: "flex",
+        marginTop: "1.5em",
+        padding: "1.5em",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+      }}
+    >
+      <img
+        style={{ maxHeight: "15em", opacity: "0.85" }}
+        src={noResultImg}
+        alt="sem-resultados"
+      />
+      <h3 className="ion-text-center"> Não há consultas marcadas. </h3>
+    </div>
+  );
+};
