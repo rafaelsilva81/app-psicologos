@@ -22,12 +22,12 @@ const ContractDetails = (props) => {
 
   const grabContract = async () => {
     const fileTransfer = FileTransfer.create();
-    fileTransfer.download(url, File.dataDirectory + "contract.pdf", true).then(
+    fileTransfer.download(url, File.tempDirectory + "contract.pdf", true).then(
       (entry) => {
-        console.log("download complete: " + entry.toURL());
+        alert("download complete: " + entry.toURL());
       },
       (error) => {
-        console.log("ERROR: ", error);
+        alert("ERROR: ", error);
       }
     );
   };
@@ -46,7 +46,7 @@ const ContractDetails = (props) => {
         </IonRow>
         <IonButton
           expand="block"
-          fill="outline"
+          fill="solid"
           className="ion-margin"
           onClick={grabContract}
         >

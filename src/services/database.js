@@ -1,19 +1,9 @@
-import React, { createContext, useContext, useState } from 'react';
-import {app} from '../firebase.config';
-import {
-	collection,
-	getDocs,
-	getFirestore,
-	limit,
-	orderBy,
-	query,
-	where,
-} from 'firebase/firestore';
-import { getMessage } from './customErrorHandler';
+import { app } from "../firebase.config";
+import { getFirestore } from "firebase/firestore";
 
 const db = getFirestore(app);
 
-export {db}
+export { db };
 /* export const DatabaseContext = createContext();
 
 export const DatabaseProvider = (props) => {

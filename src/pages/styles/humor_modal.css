@@ -1,0 +1,61 @@
+.activity-text {
+    margin-left: 1em;
+}
+
+.activity-container {
+    padding: 0.5em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.activity-container > div{
+    margin: 0.3em;
+}
+
+.test-radio-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    background-color: transparent;
+}
+
+.humor-item {
+    margin: 0 0.5em;
+    padding: 0 0.1em;
+     
+}
+
+
+.humor-radio {
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    --color:transparent;
+    --color-checked: transparent;
+}
+
+.humor-icon {
+    font-size: 1.8em;
+}
+
+
+.item-radio-checked > svg {
+    padding : 5px;
+    border: 2px solid var(--ion-color-primary);
+    border-radius: 30px;
+}
+
+.humor-container {
+    padding: 0.2em;
+   /*  border: 2px solid var(--ion-color-primary);
+    border-radius: 20px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
