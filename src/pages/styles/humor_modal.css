@@ -15,14 +15,22 @@
     margin: 0.3em;
 }
 
-.humor-container {
+.test-radio-item {
     display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
+    margin: 0;
+    background-color: transparent;
 }
 
-.test-radio {
+.humor-item {
+    margin: 0 0.5em;
+    padding: 0 0.1em;
+     
+}
+
+
+.humor-radio {
     width: 0;
     height: 0;
     margin: 0;
@@ -31,18 +39,23 @@
     --color-checked: transparent;
 }
 
-.radio-checked {
-    background-color: red;
+.humor-icon {
+    font-size: 1.8em;
 }
 
 
-.test-radio-group {
+.item-radio-checked > svg {
+    padding : 5px;
+    border: 2px solid var(--ion-color-primary);
+    border-radius: 30px;
+}
+
+.humor-container {
+    padding: 0.2em;
+   /*  border: 2px solid var(--ion-color-primary);
+    border-radius: 20px; */
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.test-radio-item {
-    margin: 0 20px;
-    background-color: transparent;
-}

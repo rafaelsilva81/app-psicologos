@@ -79,16 +79,27 @@ const HumorPage = () => {
       onWillDismiss: async (ev) => {
         if (ev.detail.role === "confirm") {
           let points = 0;
-          const { notes, ...activities } = ev.detail.data;
+          console.log(ev.detail.data);
+          const { notes, humor, ...activities } = ev.detail.data;
+
+          /* QUANTO MELHOR A RESPOSTA MAIS PONTOS, MINIMO 100 MAX 500 */
+          if (humor) {
+            points = humor * 100;
+          }
+
+          /* SE ESCREVER ALGO NA ANOTAÇÃO LIVRE GANHA 100 PONTOS */
           notes === "" ? (points += 0) : (points += 100);
+
+          /* PARA CADA ATIVIDADE GANHA 50 PONTOS */
           for (var key of Object.keys(activities)) {
             if (activities[key] !== undefined && activities[key] === true) {
-              points += 100;
+              points += 50;
             }
           }
 
           if (points > 0) {
-            console.log(treeExp);
+            console.log("pontos recebidos : ", points);
+            console.log("exp da árvore : ", treeExp + points);
             await updateDoc(userRef, {
               treeExp: treeExp + points,
             });
