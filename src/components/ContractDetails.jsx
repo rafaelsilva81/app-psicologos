@@ -22,7 +22,7 @@ const ContractDetails = (props) => {
 
   const grabContract = async () => {
     const fileTransfer = FileTransfer.create();
-    fileTransfer.download(url, File.tempDirectory + "contract.pdf", true).then(
+    fileTransfer.download(url, File.dataDirectory + "contract.pdf", true).then(
       (entry) => {
         alert("download complete: " + entry.toURL());
       },

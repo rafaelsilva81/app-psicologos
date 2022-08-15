@@ -40,7 +40,7 @@ import { useAuth } from "./services/auth";
 import Loader from "./components/Loader";
 import HomePage from "./pages/tabs/HomePage";
 import HumorPage from "./pages/tabs/HumorPage";
-import Tab3 from "./pages/tabs/Tab3";
+import ExtrasPage from "./pages/tabs/ExtrasPage";
 import ProfilePage from "./pages/tabs/ProfilePage";
 import LoginPage from "./pages/LoginPage";
 import OnboardingPage from "./pages/OnboardingPage";
@@ -75,7 +75,7 @@ const App = () => {
               <IonRouterOutlet>
                 <Route path="/home" component={HomePage} exact />
                 <Route path="/humor" component={HumorPage} exact />
-                <Route path="/extras" component={Tab3} exact />
+                <Route path="/extras" component={ExtrasPage} exact />
                 <Route path="/profile" component={ProfilePage} exact />
                 <Route
                   path="/humorOnboarding"
