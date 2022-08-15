@@ -132,10 +132,9 @@ const ProfilePage = () => {
           <IonTitle> PERFIL </IonTitle>
         </IonToolbar>
       </IonHeader>
+      <CustomCircle position="bottom-right" size="0.8" />
 
-      <IonContent scrollY={false} className="ion-padding">
-        <CustomCircle position="bottom-right" size="0.8" />
-
+      <IonContent fullscreen scrollY={false} className="ion-padding">
         {/* HEADER */}
         <IonHeader collapse="condense">
           <IonToolbar>

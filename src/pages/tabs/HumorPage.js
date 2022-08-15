@@ -115,16 +115,14 @@ const HumorPage = () => {
   } else {
     return (
       <IonPage>
-        <CustomCircle position="bottom-left" size="0.6" />
-
         {/* HEADER */}
         <IonHeader>
           <IonToolbar>
             <IonTitle> SEU DIÁRIO </IonTitle>
           </IonToolbar>
         </IonHeader>
-
-        <IonContent scrollY={false} className="ion-padding">
+        <CustomCircle position="top-left" size="0.6" />
+        <IonContent fullscreen scrollY={false} className="ion-padding">
           <IonHeader collapse="condense">
             <IonToolbar>
               <IonTitle size="large"> SEU DIÁRIO </IonTitle>
