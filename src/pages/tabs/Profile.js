@@ -20,20 +20,20 @@ import { logOut as logOutIcon } from "ionicons/icons";
 import { useAuth } from "../../services/auth";
 import { useHistory } from "react-router-dom";
 
-import ProfileDetails from "../../components/ProfileDetails";
-import ContractDetails from "../../components/ContractDetails";
+import ProfileData from "../../components/ProfileData";
+import ContractData from "../../components/ContractData";
 import { doc, updateDoc } from "firebase/firestore";
 import { useFirestore, useFirestoreDocData } from "reactfire";
 
 import "../styles/profile.css";
-import CustomCircle from "../../components/CustomCircle";
-import EditPassModal from "../EditPassModal";
-import EditDataModal from "../EditDataModal";
+import DecorationCircle from "../../components/DecorationCircle";
+import EditPass from "../EditPass";
+import EditData from "../EditData";
 
 // TODO: CSS PROPRIO PARA ESSA PAGINA
 // TODO: COMPONENTIZAÇÃO E OBTER DADOS DO BANCO
 
-const ProfilePage = () => {
+const Profile = () => {
   const [presentAlert] = useIonAlert();
 
   const { authInfo, logOut, changePassword, reauthenticateUser } = useAuth();
@@ -56,7 +56,7 @@ const ProfilePage = () => {
   const { email, name: userName, gender } = userData;
   const { name: medicName, contract } = medicData;
 
-  const [presentPassPage, dismissPassPage] = useIonModal(EditPassModal, {
+  const [presentPassPage, dismissPassPage] = useIonModal(EditPass, {
     onDismiss: (data, role) => dismissPassPage(data, role),
   });
 
@@ -89,7 +89,7 @@ const ProfilePage = () => {
     });
   }
 
-  const [presentEditData, dismissEditData] = useIonModal(EditDataModal, {
+  const [presentEditData, dismissEditData] = useIonModal(EditData, {
     onDismiss: (data, role) => dismissEditData(data, role),
     userData: { email, userName, gender },
   });
@@ -132,7 +132,7 @@ const ProfilePage = () => {
           <IonTitle> PERFIL </IonTitle>
         </IonToolbar>
       </IonHeader>
-      <CustomCircle position="bottom-right" size="0.8" />
+      <DecorationCircle position="bottom-right" size="0.8" />
 
       <IonContent fullscreen scrollY={false} className="ion-padding">
         {/* HEADER */}
@@ -146,7 +146,7 @@ const ProfilePage = () => {
         <IonGrid fixed>
           {/* PROFILE CARD */}
           <IonRow className="ion-align-items-center">
-            <ProfileDetails name={userName} email={email}></ProfileDetails>
+            <ProfileData name={userName} email={email}></ProfileData>
           </IonRow>
 
           {/* LOGOUT Button */}
@@ -187,10 +187,10 @@ const ProfilePage = () => {
 
           {/* CONTRACT Card*/}
           <IonRow className="ion-align-items-center ion-margin-top">
-            <ContractDetails
+            <ContractData
               name={medicName}
               contract={contract}
-            ></ContractDetails>
+            ></ContractData>
           </IonRow>
         </IonGrid>
       </IonContent>
@@ -205,4 +205,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default Profile;

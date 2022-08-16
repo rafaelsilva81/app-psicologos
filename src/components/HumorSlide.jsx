@@ -3,7 +3,7 @@ import "./styles/onboarding.css";
 
 import { useHistory } from "react-router-dom";
 
-const HumorOnboardingSlide = ({
+const HumorSlide = ({
   image,
   mainSlide = false,
   finalSlide = false,
@@ -52,4 +52,4 @@ const HumorOnboardingSlide = ({
   );
 };
 
-export default HumorOnboardingSlide;
+export default HumorSlide;

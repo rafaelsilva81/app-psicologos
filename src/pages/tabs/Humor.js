@@ -16,8 +16,8 @@ import { useHistory } from "react-router";
 import HumorOnboarding from "../HumorOnboarding";
 import "../styles/humor.css";
 import { addCircle } from "ionicons/icons";
-import HumorFormModal from "../HumorFormModal";
-import CustomCircle from "../../components/CustomCircle";
+import HumorForm from "../HumorForm";
+import DecorationCircle from "../../components/DecorationCircle";
 
 // TODO: tree
 import tree1 from "../../assets/imgs/tree-1.svg";
@@ -30,7 +30,7 @@ import { useAuth } from "../../services/auth";
 import { doc, updateDoc } from "firebase/firestore";
 import { useFirestore, useFirestoreDocData } from "reactfire";
 
-const HumorPage = () => {
+const Humor = () => {
   const history = useHistory();
 
   const { authInfo } = useAuth();
@@ -70,7 +70,7 @@ const HumorPage = () => {
   }, [userData, treeExp, history]);
 
   /* MODAL */
-  const [present, dismiss] = useIonModal(HumorFormModal, {
+  const [present, dismiss] = useIonModal(HumorForm, {
     onDismiss: (data, role) => dismiss(data, role),
   });
 
@@ -121,7 +121,7 @@ const HumorPage = () => {
             <IonTitle> SEU DIÁRIO </IonTitle>
           </IonToolbar>
         </IonHeader>
-        <CustomCircle position="top-left" size="0.6" />
+        <DecorationCircle position="top-left" size="0.6" />
         <IonContent fullscreen scrollY={false} className="ion-padding">
           <IonHeader collapse="condense">
             <IonToolbar>
@@ -163,4 +163,4 @@ const HumorPage = () => {
   }
 };
 
-export default HumorPage;
+export default Humor;

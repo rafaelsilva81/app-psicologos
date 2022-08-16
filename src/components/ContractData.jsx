@@ -17,7 +17,7 @@ import {
 } from "@ionic-native/file-transfer";
 import { File } from "@ionic-native/file";
 
-const ContractDetails = (props) => {
+const ContractData = (props) => {
   const { name, contract: url } = props;
 
   const grabContract = async () => {
@@ -57,4 +57,4 @@ const ContractDetails = (props) => {
   );
 };
 
-export default ContractDetails;
+export default ContractData;

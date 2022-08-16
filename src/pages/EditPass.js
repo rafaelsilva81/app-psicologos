@@ -22,7 +22,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 // @TODO Refazer isso aqui
 /* MODAL */
-const EditPassModal = ({ onDismiss }) => {
+const EditPass = ({ onDismiss }) => {
   const validationSchema = Yup.object().shape({
     oldPass: Yup.string().max(255).required("Esse campo é obrigatório"),
     newPass: Yup.string()
@@ -131,4 +131,4 @@ const EditPassModal = ({ onDismiss }) => {
   );
 };
 
-export default EditPassModal;
+export default EditPass;

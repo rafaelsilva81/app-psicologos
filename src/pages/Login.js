@@ -24,19 +24,19 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../services/auth";
 
 // Components and custom CSS
-import CustomCircle from "../components/CustomCircle";
+import DecorationCircle from "../components/DecorationCircle";
 import "./styles/login.css";
 
 // Images
 import loginImg from "../assets/imgs/login.svg";
-import ResetPasswordModal from "./ResetPasswordModal";
+import ResetPassword from "./ResetPassword";
 
-const LoginPage = ({ history }) => {
+const Login = ({ history }) => {
   const [presentAlert] = useIonAlert();
 
   let { logIn, checkFirstAccess, resetPassword } = useAuth();
 
-  const [present, dismiss] = useIonModal(ResetPasswordModal, {
+  const [present, dismiss] = useIonModal(ResetPassword, {
     onDismiss: (data, role) => dismiss(data, role),
   });
 
@@ -103,7 +103,7 @@ const LoginPage = ({ history }) => {
 
   return (
     <IonPage id="login-form">
-      <CustomCircle position="top-right" />
+      <DecorationCircle position="top-right" />
       <IonGrid>
         <IonRow
           className="
@@ -173,4 +173,4 @@ const LoginPage = ({ history }) => {
   );
 };
 
-export default LoginPage;
+export default Login;

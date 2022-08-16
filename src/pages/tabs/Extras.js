@@ -12,10 +12,10 @@ import {
 } from "@ionic/react";
 import "../styles/extras.css";
 import { calendar, pulse } from "ionicons/icons";
-import MeditationPage from "../MeditationPage";
+import Meditation from "../Meditation";
 
-const Tab3 = () => {
-  const [presentMeditationPage] = useIonModal(MeditationPage);
+const Extras = () => {
+  const [presentMeditationPage] = useIonModal(Meditation);
 
   function meditationModal() {
     presentMeditationPage();
@@ -68,4 +68,4 @@ const Tab3 = () => {
   );
 };
 
-export default Tab3;
+export default Extras;

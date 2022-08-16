@@ -18,12 +18,12 @@ import {
 } from "firebase/firestore";
 import { useFirestore, useFirestoreCollectionData } from "reactfire";
 import AppointmentItem from "../../components/AppointmentItem";
-import CustomCircle from "../../components/CustomCircle";
+import DecorationCircle from "../../components/DecorationCircle";
 import { useAuth } from "../../services/auth";
 import noResultImg from "../../assets/imgs/no_result.svg";
 import { useHistory } from "react-router";
 
-const HomePage = () => {
+const Home = () => {
   const history = useHistory();
   const { authInfo } = useAuth();
   const { user } = authInfo;
@@ -47,7 +47,7 @@ const HomePage = () => {
           <IonTitle>CONSULTAS</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <CustomCircle position="top-right" size="1.2" />
+      <DecorationCircle position="top-right" size="1.2" />
 
       <IonContent fullscreen className="ion-padding">
         <IonRefresher
@@ -88,7 +88,7 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Home;
 
 const NoResult = () => {
   return (

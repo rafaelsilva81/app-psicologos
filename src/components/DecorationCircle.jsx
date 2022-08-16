@@ -42,7 +42,7 @@ const Wrapper = styled.div`
 	overflow: hidden;
 `;
 
-const CustomCircle = (props) => {
+const DecorationCircle = (props) => {
 	let { position } = props;
 	const Options = {
 		'top-left': <TopLeftCircle {...props} />, //PASSAR O RESTO DAS PROPS
@@ -54,4 +54,4 @@ const CustomCircle = (props) => {
 	return <Wrapper>{Options[position]}</Wrapper>;
 };
 
-export default CustomCircle;
+export default DecorationCircle;

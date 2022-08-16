@@ -24,7 +24,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 // @TODO Refazer isso aqui
 /* MODAL */
-const EditDataModal = ({ onDismiss, userData }) => {
+const EditData = ({ onDismiss, userData }) => {
   const validationSchema = Yup.object().shape({
     newMail: Yup.string()
       .email("O e-mail não tem um formato válido")
@@ -140,4 +140,4 @@ const EditDataModal = ({ onDismiss, userData }) => {
   );
 };
 
-export default EditDataModal;
+export default EditData;

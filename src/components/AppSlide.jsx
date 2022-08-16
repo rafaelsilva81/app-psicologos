@@ -3,7 +3,7 @@ import "./styles/onboarding.css";
 
 import { useHistory } from "react-router-dom";
 
-const LoginOnboardingSlide = ({
+const AppSlide = ({
   image,
   mainSlide = false,
   finalSlide = false,
@@ -49,4 +49,4 @@ const LoginOnboardingSlide = ({
   );
 };
 
-export default LoginOnboardingSlide;
+export default AppSlide;

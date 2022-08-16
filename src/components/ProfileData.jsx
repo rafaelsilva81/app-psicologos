@@ -2,7 +2,7 @@ import React from 'react';
 import { IonCol, IonIcon, IonRow, IonText } from '@ionic/react';
 import { personCircle } from 'ionicons/icons';
 
-const ProfileDetails = (props) => {
+const ProfileData = (props) => {
 	const {name, email} = props
 	return (
 		<>
@@ -21,4 +21,4 @@ const ProfileDetails = (props) => {
 	);
 };
 
-export default ProfileDetails;
+export default ProfileData;

@@ -1,7 +1,7 @@
 import React from "react";
 
-const MeditationPage = () => {
+const Meditation = () => {
   return <div>MeditationPage</div>;
 };
 
-export default MeditationPage;
+export default Meditation;

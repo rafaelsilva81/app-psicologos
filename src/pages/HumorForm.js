@@ -16,7 +16,7 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { Controller, useForm } from "react-hook-form";
-import CustomCheckbox from "../components/CustomCheckbox";
+import Checkbox from "../components/Checkbox";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./styles/humor_modal.css";
@@ -52,7 +52,7 @@ import ReactTooltip from "react-tooltip";
 import { logOut as logOutIcon } from "ionicons/icons";
 
 /* MODAL */
-const HumorFormModal = ({ onDismiss }) => {
+const HumorForm = ({ onDismiss }) => {
   const activities = [
     {
       name: "family",
@@ -254,14 +254,14 @@ const HumorFormModal = ({ onDismiss }) => {
                   key={idx}
                   render={({ field }) => {
                     return (
-                      <CustomCheckbox
+                      <Checkbox
                         icon={item.icon}
                         isChecked={(c) => {
                           setValue(item.name, c);
                         }}
                       >
                         {item.text}
-                      </CustomCheckbox>
+                      </Checkbox>
                     );
                   }}
                 />
@@ -303,4 +303,4 @@ const HumorFormModal = ({ onDismiss }) => {
   );
 };
 
-export default HumorFormModal;
+export default HumorForm;

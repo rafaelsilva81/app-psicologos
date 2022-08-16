@@ -48,7 +48,7 @@ const StyledCheckbox = styled.label`
   }
 `;
 
-function CustomCheckbox({ children, ...props }) {
+function Checkbox({ children, ...props }) {
   const { icon } = props;
   const [checked, setChecked] = useState(false);
 
@@ -68,4 +68,4 @@ function CustomCheckbox({ children, ...props }) {
   );
 }
 
-export default CustomCheckbox;
+export default Checkbox;

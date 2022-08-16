@@ -38,12 +38,12 @@ import { useEffect } from "react";
 import { useAuth } from "./services/auth";
 
 import Loader from "./components/Loader";
-import HomePage from "./pages/tabs/HomePage";
-import HumorPage from "./pages/tabs/HumorPage";
-import ExtrasPage from "./pages/tabs/ExtrasPage";
-import ProfilePage from "./pages/tabs/ProfilePage";
-import LoginPage from "./pages/LoginPage";
-import OnboardingPage from "./pages/OnboardingPage";
+import Home from "./pages/tabs/Home";
+import Humor from "./pages/tabs/Humor";
+import ExtrasPage from "./pages/tabs/Extras";
+import Profile from "./pages/tabs/Profile";
+import Login from "./pages/Login";
+import AppOnboarding from "./pages/AppOnboarding";
 import HumorOnboarding from "./pages/HumorOnboarding";
 
 import moment from "moment";
@@ -73,10 +73,10 @@ const App = () => {
           {authInfo?.loggedIn === true ? (
             <IonTabs id="main-view">
               <IonRouterOutlet>
-                <Route path="/home" component={HomePage} exact />
-                <Route path="/humor" component={HumorPage} exact />
+                <Route path="/home" component={Home} exact />
+                <Route path="/humor" component={Humor} exact />
                 <Route path="/extras" component={ExtrasPage} exact />
-                <Route path="/profile" component={ProfilePage} exact />
+                <Route path="/profile" component={Profile} exact />
                 <Route
                   path="/humorOnboarding"
                   component={HumorOnboarding}
@@ -110,8 +110,8 @@ const App = () => {
             </IonTabs>
           ) : (
             <>
-              <Route exact path="/login" component={LoginPage} />
-              <Route exact path="/onboarding" component={OnboardingPage} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/onboarding" component={AppOnboarding} />
               <Redirect exact from="/" to="/login" />
             </>
           )}
