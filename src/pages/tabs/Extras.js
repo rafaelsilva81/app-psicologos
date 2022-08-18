@@ -15,7 +15,14 @@ import { calendar, pulse } from "ionicons/icons";
 import Meditation from "../Meditation";
 
 const Extras = () => {
-  const [presentMeditationPage] = useIonModal(Meditation);
+  const [presentMeditationPage, dismissMeditationPage] = useIonModal(
+    Meditation,
+    {
+      onDismiss: () => {
+        dismissMeditationPage();
+      },
+    }
+  );
 
   function meditationModal() {
     presentMeditationPage();
@@ -56,6 +63,7 @@ const Extras = () => {
             color="primary"
             lines="full"
             button
+            disabled
             onClick={() => {}}
             detail
           >

@@ -47,9 +47,7 @@ import {
   faFaceDizzy,
 } from "@fortawesome/free-regular-svg-icons";
 
-import HumorRadioInput from "../components/HumorRadioInput";
 import ReactTooltip from "react-tooltip";
-import { logOut as logOutIcon } from "ionicons/icons";
 
 /* MODAL */
 const HumorForm = ({ onDismiss }) => {
