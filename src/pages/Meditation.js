@@ -30,9 +30,12 @@ import { useFirestore, useFirestoreCollectionData } from "reactfire";
 import { collection, orderBy, query } from "firebase/firestore";
 import { Howl, Howler } from "howler";
 import "./styles/meditation.css";
+import { App } from "@capacitor/app";
+import { useHistory } from "react-router";
 
 /* TODO : Ordenar query */
 const Meditation = ({ onDismiss }) => {
+  const history = useHistory();
   const [isPlaying, setIsPlaying] = useState(false);
   const [track, setTrack] = useState();
   const [trackName, setTrackName] = useState("");
@@ -46,6 +49,13 @@ const Meditation = ({ onDismiss }) => {
       }, 1000);
       return () => clearTimeout(timer);
     }
+  });
+
+  App.addListener("backButton", () => {
+    if (track && isPlaying) {
+      track.stop();
+    }
+    history.go(-1);
   });
 
   const q = query(
@@ -67,7 +77,7 @@ const Meditation = ({ onDismiss }) => {
     var sound = new Howl({
       src: [audioData[idx].path],
       html5: true,
-      volume: 0.5,
+      volume: 0.8,
     });
     setIsPlaying(true);
     setTrack(sound);
@@ -89,10 +99,7 @@ const Meditation = ({ onDismiss }) => {
             <IonButton
               color="medium"
               onClick={() => {
-                if (track && isPlaying) {
-                  track.stop();
-                }
-                onDismiss();
+                onDismiss(track);
               }}
             >
               Fechar

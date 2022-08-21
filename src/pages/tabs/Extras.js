@@ -18,14 +18,21 @@ const Extras = () => {
   const [presentMeditationPage, dismissMeditationPage] = useIonModal(
     Meditation,
     {
-      onDismiss: () => {
-        dismissMeditationPage();
+      onDismiss: (track) => {
+        dismissMeditationPage(track);
       },
     }
   );
 
   function meditationModal() {
-    presentMeditationPage();
+    presentMeditationPage({
+      onWillDismiss: (ev) => {
+        const { data: track } = ev.detail;
+        if (track) {
+          track.stop();
+        }
+      },
+    });
   }
 
   return (

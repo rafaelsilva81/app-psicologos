@@ -24,10 +24,10 @@ const ContractData = (props) => {
     const fileTransfer = FileTransfer.create();
     fileTransfer.download(url, File.dataDirectory + "contract.pdf", true).then(
       (entry) => {
-        alert("download complete: " + entry.toURL());
+        console.log("Arquivo foi baixado: " + entry.toURL());
       },
       (error) => {
-        alert("ERROR: ", error);
+        console.log("Erro no donwload do contrato : " + error);
       }
     );
   };
@@ -45,6 +45,7 @@ const ContractData = (props) => {
           <IonText className="medic-name"> {name} </IonText>
         </IonRow>
         <IonButton
+          disabled
           expand="block"
           fill="solid"
           className="ion-margin"
