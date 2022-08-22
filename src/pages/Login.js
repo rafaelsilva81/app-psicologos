@@ -3,9 +3,9 @@ import { useEffect } from "react";
 import {
   IonButton,
   IonCol,
+  IonContent,
   IonGrid,
   IonInput,
-  IonItem,
   IonLabel,
   IonPage,
   IonRow,
@@ -30,6 +30,7 @@ import "./styles/login.css";
 // Images
 import loginImg from "../assets/imgs/login.svg";
 import ResetPassword from "./ResetPassword";
+import InputItem from "../components/InputItem";
 
 const Login = ({ history }) => {
   const [presentAlert] = useIonAlert();
@@ -103,72 +104,77 @@ const Login = ({ history }) => {
 
   return (
     <IonPage id="login-form">
-      <DecorationCircle position="top-right" />
-      <IonGrid>
-        <IonRow
-          className="
+      <IonContent>
+        <DecorationCircle position="top-right" />
+        <IonGrid>
+          <IonRow
+            className="
                     main-container
                     ion-justify-content-center 
                     ion-align-items-center"
-        >
-          <IonCol>
-            <IonRow className="ion-justify-content-center">
-              <img src={loginImg} alt="login-img" className="login-logo" />
-            </IonRow>
-
-            <IonText color="muted" className="ion-text-center">
-              <h2 className="login-title"> Bem-vindo(a)! </h2>
-            </IonText>
-            <form onSubmit={handleSubmit(loginUser)}>
-              {/* EMAIL */}
-              <IonItem>
-                <IonLabel position="floating">E-mail</IonLabel>
-                <IonInput required type="email" {...register("email")} />
-              </IonItem>
-              <div className="invalid-feedback">{errors.email?.message}</div>
-
-              {/* PASSWORD */}
-              <IonItem>
-                <IonLabel position="floating">Senha</IonLabel>
-                <IonInput
-                  required
-                  clearOnEdit={false}
-                  type="password"
-                  {...register("password")}
-                />
-              </IonItem>
-              <div className="invalid-feedback">{errors.password?.message}</div>
-
-              <IonButton
-                disabled={isSubmitting}
-                className="ion-margin-top"
-                type="submit"
-                expand="block"
-              >
-                {isSubmitting && <IonSpinner name="bubbles" />}
-                Login
-              </IonButton>
-
+          >
+            <IonCol>
               <IonRow className="ion-justify-content-center">
-                {errors.apiError && (
-                  <div className="invalid-feedback ion-text-center">
-                    {errors.apiError?.message}
-                  </div>
-                )}
+                <img src={loginImg} alt="login-img" className="login-logo" />
               </IonRow>
 
-              <IonButton
-                fill="clear"
-                color="secondary"
-                expand="block"
-                onClick={() => openResetPage()}
-              >
-                Esqueci a Senha
-              </IonButton>
-            </form>
-          </IonCol>
-        </IonRow>
-      </IonGrid>
+              <IonText color="muted" className="ion-text-center">
+                <h2 className="login-title"> Bem-vindo(a)! </h2>
+              </IonText>
+              <form onSubmit={handleSubmit(loginUser)}>
+                {/* EMAIL */}
+                <InputItem lines="none">
+                  <IonLabel position="floating">E-mail</IonLabel>
+                  <IonInput required type="email" {...register("email")} />
+                </InputItem>
+                <div className="invalid-feedback">{errors.email?.message}</div>
+
+                {/* PASSWORD */}
+                <InputItem lines="none">
+                  <IonLabel position="floating">Senha</IonLabel>
+                  <IonInput
+                    required
+                    clearOnEdit={false}
+                    type="password"
+                    {...register("password")}
+                  />
+                </InputItem>
+                <div className="invalid-feedback">
+                  {errors.password?.message}
+                </div>
+
+                <IonButton
+                  disabled={isSubmitting}
+                  className="ion-margin-top"
+                  type="submit"
+                  expand="block"
+                >
+                  {isSubmitting && <IonSpinner name="bubbles" />}
+                  Login
+                </IonButton>
+
+                <IonRow className="ion-justify-content-center">
+                  {errors.apiError && (
+                    <div className="invalid-feedback ion-text-center">
+                      {errors.apiError?.message}
+                    </div>
+                  )}
+                </IonRow>
+
+                <IonButton
+                  fill="clear"
+                  color="secondary"
+                  expand="block"
+                  style={{ textDecoration: "underline" }}
+                  onClick={() => openResetPage()}
+                >
+                  ESQUECEU SUA SENHA?
+                </IonButton>
+              </form>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
+      </IonContent>
     </IonPage>
   );
 };

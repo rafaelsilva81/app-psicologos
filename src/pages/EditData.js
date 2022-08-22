@@ -21,6 +21,7 @@ import "./styles/humor_modal.css";
 
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import InputItem from "../components/InputItem";
 
 // @TODO Refazer isso aqui
 /* MODAL */
@@ -74,7 +75,7 @@ const EditData = ({ onDismiss, userData }) => {
         <form onSubmit={handleSubmit(finishForm)}>
           <h3 className="ion-margin-start"> ALTERAR SEUS DADOS PESSOAIS </h3>
 
-          <IonItem
+          <InputItem
             lines="full"
             className="ion-margin-horizontal ion-margin-top"
           >
@@ -84,12 +85,12 @@ const EditData = ({ onDismiss, userData }) => {
               type="text"
               {...register("newName")}
             ></IonInput>
-          </IonItem>
+          </InputItem>
           <div className="ion-margin">
             <IonText color="danger"> {errors.newName?.message} </IonText>
           </div>
 
-          <IonItem
+          <InputItem
             lines="full"
             className="ion-margin-horizontal ion-margin-top"
           >
@@ -99,12 +100,12 @@ const EditData = ({ onDismiss, userData }) => {
               type="email"
               {...register("newMail")}
             ></IonInput>
-          </IonItem>
+          </InputItem>
           <div className="ion-margin">
             <IonText color="danger"> {errors.newMail?.message} </IonText>
           </div>
 
-          <IonItem
+          <InputItem
             lines="full"
             className="ion-margin-horizontal ion-margin-top"
           >
@@ -123,7 +124,7 @@ const EditData = ({ onDismiss, userData }) => {
               control={control}
               name="newGender"
             />
-          </IonItem>
+          </InputItem>
 
           <IonButton
             disabled={isSubmitting}

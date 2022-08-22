@@ -1,6 +1,7 @@
 .main-container {
 	height: 100vh !important;
 	margin: 0;
+	padding: 1em;
 }
 
 .invalid-feedback {
@@ -16,3 +17,4 @@
 .login-logo {
 	max-height: 12rem;
 }
+

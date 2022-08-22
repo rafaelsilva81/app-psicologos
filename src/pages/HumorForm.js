@@ -48,6 +48,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 
 import ReactTooltip from "react-tooltip";
+import InputItem from "../components/InputItem";
 
 /* MODAL */
 const HumorForm = ({ onDismiss }) => {
@@ -268,23 +269,17 @@ const HumorForm = ({ onDismiss }) => {
           </div>
 
           <h3 className="ion-margin-start">Anotação Livre</h3>
-          <IonItem
-            lines="full"
-            counter
-            className="ion-margin-horizontal ion-margin-top"
-          >
-            <IonLabel position="floating">
-              Descreva brevemente seu dia...
-            </IonLabel>
+          <InputItem counter className="ion-margin-horizontal ion-margin-top">
             <IonTextarea
               rows={1}
               autoGrow
               inputMode="text"
               maxlength={300}
               autofocus
+              placeholder="Descreva brevemente seu dia..."
               {...register("notes")}
             ></IonTextarea>
-          </IonItem>
+          </InputItem>
 
           <IonButton
             disabled={isSubmitting}

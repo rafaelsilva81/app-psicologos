@@ -67,11 +67,12 @@ const Home = () => {
         </IonHeader>
 
         {/* BODY */}
-        <IonList>
-          {appointmentData.length === 0 ? (
-            <NoResult />
-          ) : (
-            appointmentData.map(({ location, date, hasReview }, i) => {
+
+        {appointmentData.length === 0 ? (
+          <NoResult />
+        ) : (
+          <IonList>
+            {appointmentData.map(({ location, date, hasReview }, i) => {
               return (
                 <AppointmentItem
                   location={location}
@@ -80,9 +81,9 @@ const Home = () => {
                   key={i}
                 />
               );
-            })
-          )}
-        </IonList>
+            })}
+          </IonList>
+        )}
       </IonContent>
     </IonPage>
   );

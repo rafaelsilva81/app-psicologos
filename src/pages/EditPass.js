@@ -19,6 +19,7 @@ import "./styles/humor_modal.css";
 
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import InputItem from "../components/InputItem";
 
 // @TODO Refazer isso aqui
 /* MODAL */
@@ -66,7 +67,7 @@ const EditPass = ({ onDismiss }) => {
         <form onSubmit={handleSubmit(finishForm)}>
           <h3 className="ion-margin-start"> ALTERAR SUA SENHA </h3>
 
-          <IonItem
+          <InputItem
             lines="full"
             className="ion-margin-horizontal ion-margin-top"
           >
@@ -74,15 +75,16 @@ const EditPass = ({ onDismiss }) => {
             <IonInput
               required
               clearOnEdit={false}
+              placeholder="Entre com sua senha atual"
               type="password"
               {...register("oldPass")}
             ></IonInput>
-          </IonItem>
+          </InputItem>
           <div className="ion-margin">
             <IonText color="danger"> {errors.oldPass?.message} </IonText>
           </div>
 
-          <IonItem
+          <InputItem
             lines="full"
             className="ion-margin-horizontal ion-margin-top"
           >
@@ -91,25 +93,27 @@ const EditPass = ({ onDismiss }) => {
               required
               clearOnEdit={false}
               type="password"
+              placeholder="Entre com sua nova senha"
               {...register("newPass")}
             ></IonInput>
-          </IonItem>
+          </InputItem>
           <div className="ion-margin">
             <IonText color="danger"> {errors.newPass?.message} </IonText>
           </div>
 
-          <IonItem
+          <InputItem
             lines="full"
             className="ion-margin-horizontal ion-margin-top"
           >
-            <IonLabel position="floating">Confirme a nova senha</IonLabel>
+            <IonLabel position="floating">Confirmação da senha</IonLabel>
             <IonInput
               required
               clearOnEdit={false}
               type="password"
+              placeholder="Digite a nova senha novamente"
               {...register("newPassConfirmation")}
             ></IonInput>
-          </IonItem>
+          </InputItem>
           <div className="ion-margin">
             <IonText color="danger">
               {errors.newPassConfirmation?.message}
