@@ -170,6 +170,16 @@ const Login = ({ history }) => {
                 >
                   ESQUECEU SUA SENHA?
                 </IonButton>
+
+                <IonButton
+                  fill="clear"
+                  color="secondary"
+                  expand="block"
+                  style={{ textDecoration: "underline" }}
+                  onClick={() => history.push("/loginFunc")}
+                >
+                  É um psicólogo? Clique aqui
+                </IonButton>
               </form>
             </IonCol>
           </IonRow>

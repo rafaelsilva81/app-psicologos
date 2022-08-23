@@ -13,7 +13,6 @@ import {
   IonPage,
   IonRange,
   IonRow,
-  IonText,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";

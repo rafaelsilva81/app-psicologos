@@ -110,6 +110,7 @@ const App = () => {
             </IonTabs>
           ) : (
             <>
+              <Route exact path="/loginFunc" />
               <Route exact path="/login" component={Login} />
               <Route exact path="/onboarding" component={AppOnboarding} />
               <Redirect exact from="/" to="/login" />
