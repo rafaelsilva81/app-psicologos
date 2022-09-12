@@ -17,7 +17,6 @@ import HumorOnboarding from "../HumorOnboarding";
 import "../styles/humor.css";
 import { addCircle } from "ionicons/icons";
 import HumorForm from "../HumorForm";
-import DecorationCircle from "../../components/DecorationCircle";
 
 // TODO: tree
 import tree1 from "../../assets/imgs/tree-1.svg";
@@ -115,29 +114,14 @@ const Humor = () => {
   } else {
     return (
       <IonPage>
-        {/* HEADER */}
-        <IonHeader>
-          <IonToolbar>
-            <IonTitle> SEU DIÁRIO </IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <DecorationCircle position="top-left" size="0.6" />
         <IonContent fullscreen scrollY={false} className="ion-padding">
-          <IonHeader collapse="condense">
+          <IonHeader collapse="condense" className="page-header">
             <IonToolbar>
               <IonTitle size="large"> SEU DIÁRIO </IonTitle>
             </IonToolbar>
           </IonHeader>
 
           <IonGrid fixed className="center-grid">
-            {/* DEBUG */}
-            <span
-              className="ion-text-center"
-              style={{ fontSize: "85%", color: "#bbb" }}
-            >
-              (DEBUG) Pontos da Árvore : {treeExp} / 10000 <br />
-            </span>
-
             <IonRow className="ion-align-items-center ion-justify-content-center tree-view">
               <img
                 style={{ background: "var(--ion-color-primary)" }}

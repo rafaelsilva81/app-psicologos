@@ -25,6 +25,10 @@ const GlobalStyle = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
     background-color: #121212;
   }
+
+  .page-header {
+    margin-top: 3rem;
+  }
 `;
 
 ReactDOM.render(

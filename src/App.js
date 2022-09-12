@@ -30,7 +30,7 @@ import "@ionic/react/css/display.css";
 import "./theme/variables.css";
 
 /* OTHER IMPORTS */
-import { home, happy, addCircle, person } from "ionicons/icons";
+import { home, happy, addCircle, person, calendar } from "ionicons/icons";
 import { Redirect, Route } from "react-router";
 
 import { useEffect } from "react";
@@ -39,8 +39,8 @@ import { useAuth } from "./services/auth";
 
 import Loader from "./components/Loader";
 import Home from "./pages/tabs/Home";
+import Consultas from "./pages/tabs/Consultas";
 import Humor from "./pages/tabs/Humor";
-import ExtrasPage from "./pages/tabs/Extras";
 import Profile from "./pages/tabs/Profile";
 import Login from "./pages/Login";
 import AppOnboarding from "./pages/AppOnboarding";
@@ -74,8 +74,9 @@ const App = () => {
             <IonTabs id="main-view">
               <IonRouterOutlet>
                 <Route path="/home" component={Home} exact />
+                <Route path="/appointments" component={Consultas} exact />
                 <Route path="/humor" component={Humor} exact />
-                <Route path="/extras" component={ExtrasPage} exact />
+                {/* <Route path="/extras" component={ExtrasPage} exact /> */}
                 <Route path="/profile" component={Profile} exact />
                 <Route
                   path="/humorOnboarding"
@@ -92,15 +93,20 @@ const App = () => {
                   <IonLabel>Home</IonLabel>
                 </IonTabButton>
 
+                <IonTabButton tab="appointments" href="/appointments">
+                  <IonIcon icon={calendar} />
+                  <IonLabel>Consultas</IonLabel>
+                </IonTabButton>
+
                 <IonTabButton tab="humor" href="/humor">
                   <IonIcon icon={happy} />
                   <IonLabel>Humor</IonLabel>
                 </IonTabButton>
 
-                <IonTabButton tab="extras" href="/extras">
+                {/*    <IonTabButton tab="extras" href="/extras">
                   <IonIcon icon={addCircle} />
                   <IonLabel>Extras</IonLabel>
-                </IonTabButton>
+                </IonTabButton> */}
 
                 <IonTabButton tab="profile" href="/profile">
                   <IonIcon icon={person} />
