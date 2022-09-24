@@ -9,18 +9,57 @@ import {
   IonText,
 } from "@ionic/react";
 import { arrowDownCircle } from "ionicons/icons";
-
+import { getDownloadURL, listAll, ref as storageRef } from "firebase/storage";
 import {
   FileTransfer,
   FileUploadOptions,
   FileTransferObject,
 } from "@ionic-native/file-transfer";
 import { File } from "@ionic-native/file";
+import { useStorage } from "reactfire";
 
 const ContractData = (props) => {
-  const { name, contract: url } = props;
+  const { name, medicMail } = props;
 
-  const grabContract = async () => {
+  const storage = useStorage();
+
+  const listRef = storageRef(storage, medicMail + "/contract.pdf" || "err");
+
+  const download = async () => {
+    await getDownloadURL(listRef)
+      .then((url) => {
+        // `url` is the download URL
+        const fileTransfer = FileTransfer.create();
+        fileTransfer
+          .download(url, File.dataDirectory + "contract.pdf", true)
+          .then(
+            (entry) => {
+              alert("download complete: " + entry.toURL());
+            },
+            (error) => {
+              alert("ERROR: ", error);
+            }
+          );
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+
+  /* listAll(listRef)
+    .then((res) => {
+      if (res.items.length === 0 && res.prefixes.length === 0) {
+        console.log("The folder is empty or doesnt exist");
+      }
+      res.items.forEach((itemRef) => {
+        console.log("Item : ", itemRef);
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+    }); */
+
+  /*   const grabContract = async () => {
     const fileTransfer = FileTransfer.create();
     fileTransfer.download(url, File.dataDirectory + "contract.pdf", true).then(
       (entry) => {
@@ -30,7 +69,7 @@ const ContractData = (props) => {
         console.log("Erro no donwload do contrato : " + error);
       }
     );
-  };
+  }; */
 
   return (
     <>
@@ -45,11 +84,10 @@ const ContractData = (props) => {
           <IonText className="medic-name"> {name} </IonText>
         </IonRow>
         <IonButton
-          disabled
           expand="block"
           fill="solid"
           className="ion-margin"
-          onClick={grabContract}
+          onClick={download}
         >
           Baixar Contrato <IonIcon slot="end" icon={arrowDownCircle} />
         </IonButton>

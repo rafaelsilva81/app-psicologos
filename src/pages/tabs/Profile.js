@@ -53,7 +53,7 @@ const Profile = () => {
   });
 
   const { email, name: userName, gender } = userData;
-  const { name: medicName, contract } = medicData;
+  const { name: medicName, email: medicMail } = medicData;
 
   const [presentPassPage, dismissPassPage] = useIonModal(EditPass, {
     onDismiss: (data, role) => dismissPassPage(data, role),
@@ -178,7 +178,7 @@ const Profile = () => {
 
           {/* CONTRACT Card*/}
           <IonRow className="ion-align-items-center ion-margin-top">
-            <ContractData name={medicName} contract={contract}></ContractData>
+            <ContractData name={medicName} medicMail={medicMail}></ContractData>
           </IonRow>
         </IonGrid>
       </IonContent>
