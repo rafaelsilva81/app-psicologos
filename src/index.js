@@ -3,9 +3,10 @@ import ReactDOM from "react-dom";
 import App from "./App";
 
 import { AuthProvider } from "./services/auth";
-import { FirebaseAppProvider, FirestoreProvider } from "reactfire";
+import { FirebaseAppProvider, FirestoreProvider, StorageProvider } from "reactfire";
 import { app } from "./firebase.config";
 import { db } from "./services/database";
+import { storage } from "./services/storage";
 
 import Loader from "./components/Loader";
 import { createGlobalStyle } from "styled-components";
@@ -37,9 +38,11 @@ ReactDOM.render(
     <AuthProvider>
       <FirebaseAppProvider firebaseApp={app}>
         <FirestoreProvider sdk={db}>
-          <Suspense fallback={<Loader />}>
-            <App />
-          </Suspense>
+          <StorageProvider sdk={storage}>
+            <Suspense fallback={<Loader />}>
+              <App />
+            </Suspense>
+          </StorageProvider>
         </FirestoreProvider>
       </FirebaseAppProvider>
     </AuthProvider>
