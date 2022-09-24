@@ -16,8 +16,7 @@ import { useHistory } from "react-router";
 import HumorOnboarding from "../HumorOnboarding";
 import "../styles/humor.css";
 import { addCircle } from "ionicons/icons";
-import HumorFormModal from "../HumorFormModal";
-import CustomCircle from "../../components/CustomCircle";
+import HumorForm from "../HumorForm";
 
 // TODO: tree
 import tree1 from "../../assets/imgs/tree-1.svg";
@@ -30,7 +29,7 @@ import { useAuth } from "../../services/auth";
 import { doc, updateDoc } from "firebase/firestore";
 import { useFirestore, useFirestoreDocData } from "reactfire";
 
-const HumorPage = () => {
+const Humor = () => {
   const history = useHistory();
 
   const { authInfo } = useAuth();
@@ -70,7 +69,7 @@ const HumorPage = () => {
   }, [userData, treeExp, history]);
 
   /* MODAL */
-  const [present, dismiss] = useIonModal(HumorFormModal, {
+  const [present, dismiss] = useIonModal(HumorForm, {
     onDismiss: (data, role) => dismiss(data, role),
   });
 
@@ -115,31 +114,14 @@ const HumorPage = () => {
   } else {
     return (
       <IonPage>
-        <CustomCircle position="bottom-left" size="0.6" />
-
-        {/* HEADER */}
-        <IonHeader>
-          <IonToolbar>
-            <IonTitle> SEU DIÁRIO </IonTitle>
-          </IonToolbar>
-        </IonHeader>
-
-        <IonContent scrollY={false} className="ion-padding">
-          <IonHeader collapse="condense">
+        <IonContent fullscreen scrollY={false} className="ion-padding">
+          <IonHeader collapse="condense" className="page-header">
             <IonToolbar>
               <IonTitle size="large"> SEU DIÁRIO </IonTitle>
             </IonToolbar>
           </IonHeader>
 
           <IonGrid fixed className="center-grid">
-            {/* DEBUG */}
-            <span
-              className="ion-text-center"
-              style={{ fontSize: "85%", color: "#bbb" }}
-            >
-              (DEBUG) Pontos da Árvore : {treeExp} / 10000 <br />
-            </span>
-
             <IonRow className="ion-align-items-center ion-justify-content-center tree-view">
               <img
                 style={{ background: "var(--ion-color-primary)" }}
@@ -165,4 +147,4 @@ const HumorPage = () => {
   }
 };
 
-export default HumorPage;
+export default Humor;

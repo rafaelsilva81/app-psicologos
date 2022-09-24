@@ -1,4 +1,8 @@
+import React from "react";
 import {
+  IonBackButton,
+  IonButton,
+  IonButtons,
   IonContent,
   IonHeader,
   IonList,
@@ -18,12 +22,11 @@ import {
 } from "firebase/firestore";
 import { useFirestore, useFirestoreCollectionData } from "reactfire";
 import AppointmentItem from "../../components/AppointmentItem";
-import CustomCircle from "../../components/CustomCircle";
 import { useAuth } from "../../services/auth";
 import noResultImg from "../../assets/imgs/no_result.svg";
 import { useHistory } from "react-router";
 
-const HomePage = () => {
+const Consultas = () => {
   const history = useHistory();
   const { authInfo } = useAuth();
   const { user } = authInfo;
@@ -42,13 +45,6 @@ const HomePage = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>CONSULTAS</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <CustomCircle position="top-right" size="1.2" />
-
       <IonContent fullscreen className="ion-padding">
         <IonRefresher
           slot="fixed"
@@ -60,35 +56,38 @@ const HomePage = () => {
         </IonRefresher>
 
         {/* HEADER */}
-        <IonHeader collapse="condense">
+        <IonHeader collapse="condense" className="page-header">
           <IonToolbar>
             <IonTitle size="large">CONSULTAS</IonTitle>
           </IonToolbar>
         </IonHeader>
 
         {/* BODY */}
-        <IonList>
-          {appointmentData.length === 0 ? (
-            <NoResult />
-          ) : (
-            appointmentData.map(({ location, date, hasReview }, i) => {
-              return (
-                <AppointmentItem
-                  location={location}
-                  date={date}
-                  hasReview={hasReview}
-                  key={i}
-                />
-              );
-            })
-          )}
-        </IonList>
+
+        {appointmentData.length === 0 ? (
+          <NoResult />
+        ) : (
+          <>
+            <IonList>
+              {appointmentData.map(({ location, date, hasReview }, i) => {
+                return (
+                  <AppointmentItem
+                    location={location}
+                    date={date}
+                    hasReview={hasReview}
+                    key={i}
+                  />
+                );
+              })}
+            </IonList>
+          </>
+        )}
       </IonContent>
     </IonPage>
   );
 };
 
-export default HomePage;
+export default Consultas;
 
 const NoResult = () => {
   return (

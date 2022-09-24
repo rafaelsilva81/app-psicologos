@@ -7,8 +7,8 @@ const firebaseConfig = {
   storageBucket: "YOUR CREDENTIALS HERE!",
   messagingSenderId: "YOUR CREDENTIALS HERE!",
   appId: "YOUR CREDENTIALS HERE!",
-  measurementId: "YOUR CREDENTIALS HERE!"
+  measurementId: "YOUR CREDENTIALS HERE!",
 };
 
 const app = initializeApp(firebaseConfig);
-export default app
+export { app };

@@ -16,7 +16,7 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { Controller, useForm } from "react-hook-form";
-import CustomCheckbox from "../components/CustomCheckbox";
+import Checkbox from "../components/Checkbox";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./styles/humor_modal.css";
@@ -47,12 +47,11 @@ import {
   faFaceDizzy,
 } from "@fortawesome/free-regular-svg-icons";
 
-import HumorRadioInput from "../components/HumorRadioInput";
 import ReactTooltip from "react-tooltip";
-import { logOut as logOutIcon } from "ionicons/icons";
+import InputItem from "../components/InputItem";
 
 /* MODAL */
-const HumorFormModal = ({ onDismiss }) => {
+const HumorForm = ({ onDismiss }) => {
   const activities = [
     {
       name: "family",
@@ -254,14 +253,14 @@ const HumorFormModal = ({ onDismiss }) => {
                   key={idx}
                   render={({ field }) => {
                     return (
-                      <CustomCheckbox
+                      <Checkbox
                         icon={item.icon}
                         isChecked={(c) => {
                           setValue(item.name, c);
                         }}
                       >
                         {item.text}
-                      </CustomCheckbox>
+                      </Checkbox>
                     );
                   }}
                 />
@@ -270,23 +269,17 @@ const HumorFormModal = ({ onDismiss }) => {
           </div>
 
           <h3 className="ion-margin-start">Anotação Livre</h3>
-          <IonItem
-            lines="full"
-            counter
-            className="ion-margin-horizontal ion-margin-top"
-          >
-            <IonLabel position="floating">
-              Descreva brevemente seu dia...
-            </IonLabel>
+          <InputItem counter className="ion-margin-horizontal ion-margin-top">
             <IonTextarea
               rows={1}
               autoGrow
               inputMode="text"
               maxlength={300}
               autofocus
+              placeholder="Descreva brevemente seu dia..."
               {...register("notes")}
             ></IonTextarea>
-          </IonItem>
+          </InputItem>
 
           <IonButton
             disabled={isSubmitting}
@@ -303,4 +296,4 @@ const HumorFormModal = ({ onDismiss }) => {
   );
 };
 
-export default HumorFormModal;
+export default HumorForm;

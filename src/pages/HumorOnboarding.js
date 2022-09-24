@@ -9,8 +9,8 @@ import {
 import { arrowBack, arrowForward } from "ionicons/icons";
 import { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";
-import CustomCircle from "../components/CustomCircle";
-import HumorOnboardingSlide from "../components/HumorOnboardingSlide";
+import DecorationCircle from "../components/DecorationCircle";
+import HumorSlide from "../components/HumorSlide";
 
 /* Imagens */
 // @TODO mudar essas imagens
@@ -67,8 +67,8 @@ const HumorOnboarding = () => {
   return (
     <IonPage>
       <IonContent scrollY={false}>
-        <CustomCircle secondary position="top-left" />
-        <CustomCircle secondary position="bottom-right" size="1.5" />
+        <DecorationCircle secondary position="top-left" />
+        <DecorationCircle secondary position="bottom-right" size="1.5" />
         <IonSlides
           style={{
             backgroundColor: "var(--ion-color-primary)",
@@ -85,7 +85,7 @@ const HumorOnboarding = () => {
         >
           {slideContent.map((slide, index) => {
             return (
-              <HumorOnboardingSlide
+              <HumorSlide
                 key={index}
                 {...slide}
                 lastSlide={lastSlide}

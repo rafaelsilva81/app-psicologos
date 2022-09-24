@@ -20,20 +20,19 @@ import { logOut as logOutIcon } from "ionicons/icons";
 import { useAuth } from "../../services/auth";
 import { useHistory } from "react-router-dom";
 
-import ProfileDetails from "../../components/ProfileDetails";
-import ContractDetails from "../../components/ContractDetails";
+import ProfileData from "../../components/ProfileData";
+import ContractData from "../../components/ContractData";
 import { doc, updateDoc } from "firebase/firestore";
 import { useFirestore, useFirestoreDocData } from "reactfire";
 
 import "../styles/profile.css";
-import CustomCircle from "../../components/CustomCircle";
-import EditPassModal from "../EditPassModal";
-import EditDataModal from "../EditDataModal";
+import EditPass from "../EditPass";
+import EditData from "../EditData";
 
 // TODO: CSS PROPRIO PARA ESSA PAGINA
 // TODO: COMPONENTIZAÇÃO E OBTER DADOS DO BANCO
 
-const ProfilePage = () => {
+const Profile = () => {
   const [presentAlert] = useIonAlert();
 
   const { authInfo, logOut, changePassword, reauthenticateUser } = useAuth();
@@ -54,9 +53,9 @@ const ProfilePage = () => {
   });
 
   const { email, name: userName, gender } = userData;
-  const { name: medicName, contract } = medicData;
+  const { name: medicName, email: medicMail } = medicData;
 
-  const [presentPassPage, dismissPassPage] = useIonModal(EditPassModal, {
+  const [presentPassPage, dismissPassPage] = useIonModal(EditPass, {
     onDismiss: (data, role) => dismissPassPage(data, role),
   });
 
@@ -89,7 +88,7 @@ const ProfilePage = () => {
     });
   }
 
-  const [presentEditData, dismissEditData] = useIonModal(EditDataModal, {
+  const [presentEditData, dismissEditData] = useIonModal(EditData, {
     onDismiss: (data, role) => dismissEditData(data, role),
     userData: { email, userName, gender },
   });
@@ -126,18 +125,9 @@ const ProfilePage = () => {
 
   return (
     <IonPage>
-      {/* HEADER */}
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle> PERFIL </IonTitle>
-        </IonToolbar>
-      </IonHeader>
-
-      <IonContent scrollY={false} className="ion-padding">
-        <CustomCircle position="bottom-right" size="0.8" />
-
+      <IonContent fullscreen scrollY={false} className="ion-padding">
         {/* HEADER */}
-        <IonHeader collapse="condense">
+        <IonHeader collapse="condense" className="page-header">
           <IonToolbar>
             <IonTitle size="large">PERFIL</IonTitle>
           </IonToolbar>
@@ -147,14 +137,14 @@ const ProfilePage = () => {
         <IonGrid fixed>
           {/* PROFILE CARD */}
           <IonRow className="ion-align-items-center">
-            <ProfileDetails name={userName} email={email}></ProfileDetails>
+            <ProfileData name={userName} email={email}></ProfileData>
           </IonRow>
 
           {/* LOGOUT Button */}
           <IonRow>
             <IonCol>
-              <IonButton expand="full" onClick={handleLogout}>
-                LOGOUT
+              <IonButton expand="block" onClick={handleLogout}>
+                SAIR
                 <IonIcon slot="end" icon={logOutIcon} />
               </IonButton>
             </IonCol>
@@ -164,7 +154,7 @@ const ProfilePage = () => {
           <IonRow>
             <IonCol size="6">
               <IonButton
-                expand="full"
+                expand="block"
                 color="secondary"
                 fill="solid"
                 size="small"
@@ -175,7 +165,7 @@ const ProfilePage = () => {
             </IonCol>
             <IonCol size="6">
               <IonButton
-                expand="full"
+                expand="block"
                 color="secondary"
                 fill="solid"
                 size="small"
@@ -188,10 +178,7 @@ const ProfilePage = () => {
 
           {/* CONTRACT Card*/}
           <IonRow className="ion-align-items-center ion-margin-top">
-            <ContractDetails
-              name={medicName}
-              contract={contract}
-            ></ContractDetails>
+            <ContractData name={medicName} medicMail={medicMail}></ContractData>
           </IonRow>
         </IonGrid>
       </IonContent>
@@ -206,4 +193,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default Profile;

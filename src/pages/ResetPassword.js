@@ -21,7 +21,7 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 /* MODAL */
-const ResetPasswordModal = ({ onDismiss }) => {
+const ResetPassword = ({ onDismiss }) => {
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email("O e-mail não tem um formato válido")
@@ -87,4 +87,4 @@ const ResetPasswordModal = ({ onDismiss }) => {
   );
 };
 
-export default ResetPasswordModal;
+export default ResetPassword;

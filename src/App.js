@@ -30,7 +30,7 @@ import "@ionic/react/css/display.css";
 import "./theme/variables.css";
 
 /* OTHER IMPORTS */
-import { home, happy, addCircle, person } from "ionicons/icons";
+import { home, happy, addCircle, person, calendar } from "ionicons/icons";
 import { Redirect, Route } from "react-router";
 
 import { useEffect } from "react";
@@ -38,12 +38,12 @@ import { useEffect } from "react";
 import { useAuth } from "./services/auth";
 
 import Loader from "./components/Loader";
-import HomePage from "./pages/tabs/HomePage";
-import HumorPage from "./pages/tabs/HumorPage";
-import Tab3 from "./pages/tabs/Tab3";
-import ProfilePage from "./pages/tabs/ProfilePage";
-import LoginPage from "./pages/LoginPage";
-import OnboardingPage from "./pages/OnboardingPage";
+import Home from "./pages/tabs/Home";
+import Consultas from "./pages/tabs/Consultas";
+import Humor from "./pages/tabs/Humor";
+import Profile from "./pages/tabs/Profile";
+import Login from "./pages/Login";
+import AppOnboarding from "./pages/AppOnboarding";
 import HumorOnboarding from "./pages/HumorOnboarding";
 
 import moment from "moment";
@@ -73,10 +73,11 @@ const App = () => {
           {authInfo?.loggedIn === true ? (
             <IonTabs id="main-view">
               <IonRouterOutlet>
-                <Route path="/home" component={HomePage} exact />
-                <Route path="/humor" component={HumorPage} exact />
-                <Route path="/extras" component={Tab3} exact />
-                <Route path="/profile" component={ProfilePage} exact />
+                <Route path="/home" component={Home} exact />
+                <Route path="/appointments" component={Consultas} exact />
+                <Route path="/humor" component={Humor} exact />
+                {/* <Route path="/extras" component={ExtrasPage} exact /> */}
+                <Route path="/profile" component={Profile} exact />
                 <Route
                   path="/humorOnboarding"
                   component={HumorOnboarding}
@@ -92,15 +93,20 @@ const App = () => {
                   <IonLabel>Home</IonLabel>
                 </IonTabButton>
 
+                <IonTabButton tab="appointments" href="/appointments">
+                  <IonIcon icon={calendar} />
+                  <IonLabel>Consultas</IonLabel>
+                </IonTabButton>
+
                 <IonTabButton tab="humor" href="/humor">
                   <IonIcon icon={happy} />
                   <IonLabel>Humor</IonLabel>
                 </IonTabButton>
 
-                <IonTabButton tab="extras" href="/extras">
+                {/*    <IonTabButton tab="extras" href="/extras">
                   <IonIcon icon={addCircle} />
                   <IonLabel>Extras</IonLabel>
-                </IonTabButton>
+                </IonTabButton> */}
 
                 <IonTabButton tab="profile" href="/profile">
                   <IonIcon icon={person} />
@@ -110,8 +116,9 @@ const App = () => {
             </IonTabs>
           ) : (
             <>
-              <Route exact path="/login" component={LoginPage} />
-              <Route exact path="/onboarding" component={OnboardingPage} />
+              <Route exact path="/loginFunc" />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/onboarding" component={AppOnboarding} />
               <Redirect exact from="/" to="/login" />
             </>
           )}
