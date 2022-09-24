@@ -1,114 +1,118 @@
 import {
+  IonBackButton,
+  IonButtons,
+  IonCard,
   IonContent,
   IonHeader,
-  IonList,
+  IonIcon,
+  IonItem,
+  IonLabel,
   IonPage,
-  IonRefresher,
-  IonRefresherContent,
   IonTitle,
   IonToolbar,
+  useIonModal,
 } from "@ionic/react";
-import {
-  collection,
-  doc,
-  limit,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
-import { useFirestore, useFirestoreCollectionData } from "reactfire";
-import AppointmentItem from "../../components/AppointmentItem";
-import DecorationCircle from "../../components/DecorationCircle";
-import { useAuth } from "../../services/auth";
-import noResultImg from "../../assets/imgs/no_result.svg";
+import "../styles/home.css";
+import { happy, person, calendar, radio } from "ionicons/icons";
+import Meditation from "../Meditation";
 import { useHistory } from "react-router";
 
 const Home = () => {
   const history = useHistory();
-  const { authInfo } = useAuth();
-  const { user } = authInfo;
 
-  const userRef = doc(useFirestore(), "users", user.email);
-  const q = query(
-    collection(useFirestore(), "appointments"),
-    where("patient", "==", userRef),
-    limit(10),
-    orderBy("date", "asc")
+  const [presentMeditationPage, dismissMeditationPage] = useIonModal(
+    Meditation,
+    {
+      onDismiss: (track) => {
+        dismissMeditationPage(track);
+      },
+    }
   );
 
-  const { data: appointmentData } = useFirestoreCollectionData(q, {
-    suspense: true, //Necessário pra que a aplicação fique suspendida enquanto tudo carrega
-  });
+  function meditationModal() {
+    presentMeditationPage({
+      onWillDismiss: (ev) => {
+        const { data: track } = ev.detail;
+        if (track) {
+          track.stop();
+        }
+      },
+    });
+  }
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>CONSULTAS</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <DecorationCircle position="top-right" size="1.2" />
-
       <IonContent fullscreen className="ion-padding">
-        <IonRefresher
-          slot="fixed"
-          onIonRefresh={() => {
-            history.go(0);
-          }}
-        >
-          <IonRefresherContent></IonRefresherContent>
-        </IonRefresher>
-
         {/* HEADER */}
-        <IonHeader collapse="condense">
+        <IonHeader collapse="condense" className="page-header">
           <IonToolbar>
-            <IonTitle size="large">CONSULTAS</IonTitle>
+            <IonTitle size="large">HOME</IonTitle>
           </IonToolbar>
         </IonHeader>
 
         {/* BODY */}
 
-        {appointmentData.length === 0 ? (
-          <NoResult />
-        ) : (
-          <IonList>
-            {appointmentData.map(({ location, date, hasReview }, i) => {
-              return (
-                <AppointmentItem
-                  location={location}
-                  date={date}
-                  hasReview={hasReview}
-                  key={i}
-                />
-              );
-            })}
-          </IonList>
-        )}
+        <IonCard className="menu-button">
+          <IonItem
+            color="primary"
+            lines="full"
+            button
+            className="menu-item"
+            onClick={() => {
+              history.push("/appointments");
+            }}
+            detail
+          >
+            <IonIcon icon={calendar} slot="start" />
+            <IonLabel>Suas Consultas</IonLabel>
+          </IonItem>
+        </IonCard>
+
+        <IonCard>
+          <IonItem
+            color="primary"
+            lines="full"
+            button
+            onClick={() => {
+              history.push("/humor");
+            }}
+            detail
+          >
+            <IonIcon icon={happy} slot="start" />
+            <IonLabel>Acomp. de Humor</IonLabel>
+          </IonItem>
+        </IonCard>
+
+        <IonCard>
+          <IonItem
+            color="primary"
+            lines="full"
+            button
+            onClick={() => meditationModal()}
+            detail
+          >
+            <IonIcon icon={radio} slot="start" />
+            <IonLabel>Meditação Guiada</IonLabel>
+          </IonItem>
+        </IonCard>
+
+        <IonCard>
+          <IonItem
+            color="primary"
+            lines="full"
+            button
+            onClick={() => {
+              history.push("/profile");
+            }}
+            detail
+          >
+            <IonIcon icon={person} slot="start" />
+            <IonLabel>Seu perfil</IonLabel>
+          </IonItem>
+        </IonCard>
       </IonContent>
     </IonPage>
   );
 };
 
 export default Home;
-
-const NoResult = () => {
-  return (
-    <div
-      style={{
-        display: "flex",
-        marginTop: "1.5em",
-        padding: "1.5em",
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: "column",
-      }}
-    >
-      <img
-        style={{ maxHeight: "15em", opacity: "0.85" }}
-        src={noResultImg}
-        alt="sem-resultados"
-      />
-      <h3 className="ion-text-center"> Não há consultas marcadas. </h3>
-    </div>
-  );
-};

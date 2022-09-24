@@ -26,7 +26,6 @@ import { doc, updateDoc } from "firebase/firestore";
 import { useFirestore, useFirestoreDocData } from "reactfire";
 
 import "../styles/profile.css";
-import DecorationCircle from "../../components/DecorationCircle";
 import EditPass from "../EditPass";
 import EditData from "../EditData";
 
@@ -54,7 +53,7 @@ const Profile = () => {
   });
 
   const { email, name: userName, gender } = userData;
-  const { name: medicName, contract } = medicData;
+  const { name: medicName, email: medicMail } = medicData;
 
   const [presentPassPage, dismissPassPage] = useIonModal(EditPass, {
     onDismiss: (data, role) => dismissPassPage(data, role),
@@ -126,17 +125,9 @@ const Profile = () => {
 
   return (
     <IonPage>
-      {/* HEADER */}
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle> PERFIL </IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <DecorationCircle position="bottom-right" size="0.8" />
-
       <IonContent fullscreen scrollY={false} className="ion-padding">
         {/* HEADER */}
-        <IonHeader collapse="condense">
+        <IonHeader collapse="condense" className="page-header">
           <IonToolbar>
             <IonTitle size="large">PERFIL</IonTitle>
           </IonToolbar>
@@ -152,8 +143,8 @@ const Profile = () => {
           {/* LOGOUT Button */}
           <IonRow>
             <IonCol>
-              <IonButton expand="full" onClick={handleLogout}>
-                LOGOUT
+              <IonButton expand="block" onClick={handleLogout}>
+                SAIR
                 <IonIcon slot="end" icon={logOutIcon} />
               </IonButton>
             </IonCol>
@@ -163,7 +154,7 @@ const Profile = () => {
           <IonRow>
             <IonCol size="6">
               <IonButton
-                expand="full"
+                expand="block"
                 color="secondary"
                 fill="solid"
                 size="small"
@@ -174,7 +165,7 @@ const Profile = () => {
             </IonCol>
             <IonCol size="6">
               <IonButton
-                expand="full"
+                expand="block"
                 color="secondary"
                 fill="solid"
                 size="small"
@@ -187,10 +178,7 @@ const Profile = () => {
 
           {/* CONTRACT Card*/}
           <IonRow className="ion-align-items-center ion-margin-top">
-            <ContractData
-              name={medicName}
-              contract={contract}
-            ></ContractData>
+            <ContractData name={medicName} medicMail={medicMail}></ContractData>
           </IonRow>
         </IonGrid>
       </IonContent>
