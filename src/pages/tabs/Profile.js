@@ -26,8 +26,8 @@ import { doc, updateDoc } from "firebase/firestore";
 import { useFirestore, useFirestoreDocData } from "reactfire";
 
 import "../styles/profile.css";
-import EditPass from "../EditPass";
-import EditData from "../EditData";
+import EditPass from "../modals/EditPass";
+import EditData from "../modals/EditData";
 
 // TODO: CSS PROPRIO PARA ESSA PAGINA
 // TODO: COMPONENTIZAÇÃO E OBTER DADOS DO BANCO

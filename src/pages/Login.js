@@ -29,7 +29,7 @@ import "./styles/login.css";
 
 // Images
 import loginImg from "../assets/imgs/login.svg";
-import ResetPassword from "./ResetPassword";
+import ResetPassword from "./modals/ResetPassword";
 import InputItem from "../components/InputItem";
 
 const Login = ({ history }) => {

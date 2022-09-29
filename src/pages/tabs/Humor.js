@@ -13,10 +13,10 @@ import {
 } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import HumorOnboarding from "../HumorOnboarding";
+import HumorOnboarding from "../onboarding/HumorOnboarding";
 import "../styles/humor.css";
 import { addCircle } from "ionicons/icons";
-import HumorForm from "../HumorForm";
+import HumorForm from "../modals/HumorForm";
 
 // TODO: tree
 import tree1 from "../../assets/imgs/tree-1.svg";

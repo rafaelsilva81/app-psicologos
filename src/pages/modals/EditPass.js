@@ -15,11 +15,11 @@ import {
 
 import { useForm } from "react-hook-form";
 
-import "./styles/humor_modal.css";
+import "../styles/humor_modal.css";
 
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import InputItem from "../components/InputItem";
+import InputItem from "../../components/InputItem";
 
 // @TODO Refazer isso aqui
 /* MODAL */

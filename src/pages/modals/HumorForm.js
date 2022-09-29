@@ -16,10 +16,10 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { Controller, useForm } from "react-hook-form";
-import Checkbox from "../components/Checkbox";
+import Checkbox from "../../components/Checkbox";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import "./styles/humor_modal.css";
+import "../styles/humor_modal.css";
 
 import {
   faPeopleRoof,
@@ -48,7 +48,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 
 import ReactTooltip from "react-tooltip";
-import InputItem from "../components/InputItem";
+import InputItem from "../../components/InputItem";
 
 /* MODAL */
 const HumorForm = ({ onDismiss }) => {

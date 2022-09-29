@@ -9,15 +9,15 @@ import {
 import { arrowBack, arrowForward } from "ionicons/icons";
 import { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";
-import DecorationCircle from "../components/DecorationCircle";
-import HumorSlide from "../components/HumorSlide";
+import DecorationCircle from "../../components/DecorationCircle";
+import HumorSlide from "../../components/HumorSlide";
 
 /* Imagens */
 // @TODO mudar essas imagens
-import humorOnboarding1 from "../assets/imgs/onboarding-1.svg";
-import humorOnboarding2 from "../assets/imgs/onboarding-2.svg";
-import humorOnboarding3 from "../assets/imgs/onboarding-3.svg";
-import humorOnboarding4 from "../assets/imgs/onboarding-4.svg";
+import humorOnboarding1 from "../../assets/imgs/onboarding-1.svg";
+import humorOnboarding2 from "../../assets/imgs/onboarding-2.svg";
+import humorOnboarding3 from "../../assets/imgs/onboarding-3.svg";
+import humorOnboarding4 from "../../assets/imgs/onboarding-4.svg";
 
 const HumorOnboarding = () => {
   const sliderRef = useRef();

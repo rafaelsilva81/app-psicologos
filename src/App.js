@@ -43,8 +43,10 @@ import Consultas from "./pages/tabs/Consultas";
 import Humor from "./pages/tabs/Humor";
 import Profile from "./pages/tabs/Profile";
 import Login from "./pages/Login";
-import AppOnboarding from "./pages/AppOnboarding";
-import HumorOnboarding from "./pages/HumorOnboarding";
+import AppOnboarding from "./pages/onboarding/AppOnboarding";
+import HumorOnboarding from "./pages/onboarding/HumorOnboarding";
+
+import { PushNotificationSchema, PushNotifications, Token, ActionPerformed } from '@capacitor/push-notifications';
 
 import moment from "moment";
 import "moment/locale/pt-br";
@@ -62,7 +64,53 @@ const App = () => {
 
   useEffect(() => {
     !authInfo?.initialized && (async () => await initializeAuth())();
+
+    PushNotifications.checkPermissions().then((res) => {
+      if (res.receive !== 'granted') {
+        PushNotifications.requestPermissions().then((res) => {
+          if (res.receive === 'denied') {
+            alert('Push Notification permission denied');
+          }
+          else {
+            alert('Push Notification permission granted');
+            register();
+          }
+        });
+      }
+      else {
+        register();
+      }
+    });
   }, [authInfo, initializeAuth]);
+
+  const register = () => {
+    console.log('Initializing HomePage');
+
+    // Register with Apple / Google to receive push via APNS/FCM
+    PushNotifications.register();
+
+    // On success, we should be able to receive notifications
+    PushNotifications.addListener('registration',
+      (token) => {
+        alert('Push registration success');
+      }
+    );
+
+    // Some issue with our setup and push will not work
+    PushNotifications.addListener('registrationError',
+      (error) => {
+        alert('Error on registration: ' + JSON.stringify(error));
+      }
+    );
+
+    // Method called when tapping on a notification
+    PushNotifications.addListener('pushNotificationActionPerformed',
+      (notification) => {
+        alert('Push received: ' + JSON.stringify(notification));
+      }
+    );
+  }
+
 
   if (!authInfo || !authInfo.initialized) {
     return <Loader />;
@@ -70,58 +118,59 @@ const App = () => {
     return (
       <IonApp>
         <IonReactRouter>
-          {authInfo?.loggedIn === true ? (
-            <IonTabs id="main-view">
-              <IonRouterOutlet>
-                <Route path="/home" component={Home} exact />
-                <Route path="/appointments" component={Consultas} exact />
-                <Route path="/humor" component={Humor} exact />
-                {/* <Route path="/extras" component={ExtrasPage} exact /> */}
-                <Route path="/profile" component={Profile} exact />
-                <Route
-                  path="/humorOnboarding"
-                  component={HumorOnboarding}
-                  exact
-                />
-                <Route exact path="/" render={() => <Redirect to="/home" />} />
-              </IonRouterOutlet>
+          {authInfo?.loggedIn === true ?
+            (
+              <IonTabs id="main-view">
+                <IonRouterOutlet>
+                  <Route path="/home" component={Home} exact />
+                  <Route path="/appointments" component={Consultas} exact />
+                  <Route path="/humor" component={Humor} exact />
+                  {/* <Route path="/extras" component={ExtrasPage} exact /> */}
+                  <Route path="/profile" component={Profile} exact />
+                  <Route
+                    path="/humorOnboarding"
+                    component={HumorOnboarding}
+                    exact
+                  />
+                  <Route exact path="/" render={() => <Redirect to="/home" />} />
+                </IonRouterOutlet>
 
-              {/* TAB BAR LAYOUT - IONIC DEFAULT */}
-              <IonTabBar slot="bottom">
-                <IonTabButton tab="home" href="/home">
-                  <IonIcon icon={home} />
-                  <IonLabel>Home</IonLabel>
-                </IonTabButton>
+                {/* TAB BAR LAYOUT - IONIC DEFAULT */}
+                <IonTabBar slot="bottom">
+                  <IonTabButton tab="home" href="/home">
+                    <IonIcon icon={home} />
+                    <IonLabel>Home</IonLabel>
+                  </IonTabButton>
 
-                <IonTabButton tab="appointments" href="/appointments">
-                  <IonIcon icon={calendar} />
-                  <IonLabel>Consultas</IonLabel>
-                </IonTabButton>
+                  <IonTabButton tab="appointments" href="/appointments">
+                    <IonIcon icon={calendar} />
+                    <IonLabel>Consultas</IonLabel>
+                  </IonTabButton>
 
-                <IonTabButton tab="humor" href="/humor">
-                  <IonIcon icon={happy} />
-                  <IonLabel>Humor</IonLabel>
-                </IonTabButton>
+                  <IonTabButton tab="humor" href="/humor">
+                    <IonIcon icon={happy} />
+                    <IonLabel>Humor</IonLabel>
+                  </IonTabButton>
 
-                {/*    <IonTabButton tab="extras" href="/extras">
+                  {/*    <IonTabButton tab="extras" href="/extras">
                   <IonIcon icon={addCircle} />
                   <IonLabel>Extras</IonLabel>
                 </IonTabButton> */}
 
-                <IonTabButton tab="profile" href="/profile">
-                  <IonIcon icon={person} />
-                  <IonLabel>Perfil</IonLabel>
-                </IonTabButton>
-              </IonTabBar>
-            </IonTabs>
-          ) : (
-            <>
-              <Route exact path="/loginFunc" />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/onboarding" component={AppOnboarding} />
-              <Redirect exact from="/" to="/login" />
-            </>
-          )}
+                  <IonTabButton tab="profile" href="/profile">
+                    <IonIcon icon={person} />
+                    <IonLabel>Perfil</IonLabel>
+                  </IonTabButton>
+                </IonTabBar>
+              </IonTabs>
+            ) : (
+              <>
+                <Route exact path="/loginFunc" />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/onboarding" component={AppOnboarding} />
+                <Redirect exact from="/" to="/login" />
+              </>
+            )}
         </IonReactRouter>
       </IonApp>
     );
