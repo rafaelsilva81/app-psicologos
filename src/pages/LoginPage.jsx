@@ -24,8 +24,8 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../services/auth";
 
 // Components and custom CSS
-import DecorationCircle from "../components/DecorationCircle";
-import "./styles/login.css";
+import DecorationCircle from "../components/common/DecorationCircle";
+import "../styles/login.css";
 
 // Images
 import loginImg from "../assets/imgs/login.svg";
@@ -125,7 +125,7 @@ const Login = ({ history }) => {
                 {/* EMAIL */}
                 <InputItem lines="none">
                   <IonLabel position="floating">E-mail</IonLabel>
-                  <IonInput required type="email" {...register("email")} />
+                  <IonInput type="email" {...register("email")} />
                 </InputItem>
                 <div className="invalid-feedback">{errors.email?.message}</div>
 
@@ -133,7 +133,6 @@ const Login = ({ history }) => {
                 <InputItem lines="none">
                   <IonLabel position="floating">Senha</IonLabel>
                   <IonInput
-                    required
                     clearOnEdit={false}
                     type="password"
                     {...register("password")}

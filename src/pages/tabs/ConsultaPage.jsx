@@ -1,8 +1,5 @@
 import React from "react";
 import {
-  IonBackButton,
-  IonButton,
-  IonButtons,
   IonContent,
   IonHeader,
   IonList,

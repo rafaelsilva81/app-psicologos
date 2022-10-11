@@ -94,6 +94,9 @@
     "@capacitor/cli": "3.6.0",
     "eslint": "^8.21.0",
     "eslint-plugin-react": "^7.30.1",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-normalize": "^10.0.1",
+    "postcss-preset-env": "^7.8.2",
     "react-scripts": "^5.0.1"
   },
   "description": "An Ionic project"

@@ -7,7 +7,7 @@ import {
   IonLabel,
   IonRow,
 } from "@ionic/react";
-import "./styles/appointment.css";
+import "../styles/appointment.css";
 import moment from "moment";
 import { location as locationIcon, time, calendar } from "ionicons/icons";
 

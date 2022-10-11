@@ -14,7 +14,7 @@ import {
 } from "@ionic/react";
 import "../styles/home.css";
 import { happy, person, calendar, radio } from "ionicons/icons";
-import Meditation from "../Meditation";
+import Meditation from "../MeditationPage";
 import { useHistory } from "react-router";
 
 const Home = () => {

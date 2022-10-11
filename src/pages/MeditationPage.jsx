@@ -4,7 +4,6 @@ import {
   IonCol,
   IonContent,
   IonFooter,
-  IonGrid,
   IonHeader,
   IonIcon,
   IonItem,
@@ -16,19 +15,15 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   play as playIcon,
-  pause as pauseIcon,
-  playSkipBack,
-  playSkipForward,
-  musicalNotes,
-  pause,
+  pause as pauseIcon
 } from "ionicons/icons";
 import { useFirestore, useFirestoreCollectionData } from "reactfire";
 import { collection, orderBy, query } from "firebase/firestore";
-import { Howl, Howler } from "howler";
-import "./styles/meditation.css";
+import { Howl } from "howler";
+import "../styles/meditation.css";
 import { App } from "@capacitor/app";
 import { useHistory } from "react-router";
 

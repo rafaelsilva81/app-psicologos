@@ -9,7 +9,7 @@ import {
   signOut,
   updatePassword,
 } from "firebase/auth";
-import { getMessage } from "./customErrorHandler";
+import { getMessage } from "../error_handler";
 
 const auth = getAuth(app);
 

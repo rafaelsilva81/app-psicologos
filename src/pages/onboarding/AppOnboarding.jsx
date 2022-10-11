@@ -9,7 +9,7 @@ import {
 import { arrowBack, arrowForward } from "ionicons/icons";
 import { useRef, useState } from "react";
 import AppSlide from "../../components/AppSlide";
-import DecorationCircle from "../../components/DecorationCircle";
+import DecorationCircle from "../../components/common/DecorationCircle";
 
 /* IMAGE IMPORTS */
 import onboarding1 from "../../assets/imgs/onboarding-1.svg";

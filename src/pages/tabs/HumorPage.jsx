@@ -14,7 +14,7 @@ import {
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import HumorOnboarding from "../onboarding/HumorOnboarding";
-import "../styles/humor.css";
+import "../../styles/humor.css";
 import { addCircle } from "ionicons/icons";
 import HumorForm from "../modals/HumorForm";
 

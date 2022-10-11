@@ -25,7 +25,7 @@ import ContractData from "../../components/ContractData";
 import { doc, updateDoc } from "firebase/firestore";
 import { useFirestore, useFirestoreDocData } from "reactfire";
 
-import "../styles/profile.css";
+import "../../styles/profile.css";
 import EditPass from "../modals/EditPass";
 import EditData from "../modals/EditData";
 

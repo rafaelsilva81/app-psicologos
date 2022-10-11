@@ -27,29 +27,30 @@ import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
 
 /* Theme variables */
-import "./theme/variables.css";
+import "./styles/variables.css";
 
 /* OTHER IMPORTS */
-import { home, happy, addCircle, person, calendar } from "ionicons/icons";
+import { home, happy, person, calendar } from "ionicons/icons";
 import { Redirect, Route } from "react-router";
 
 import { useEffect } from "react";
 
 import { useAuth } from "./services/auth";
 
-import Loader from "./components/Loader";
-import Home from "./pages/tabs/Home";
-import Consultas from "./pages/tabs/Consultas";
-import Humor from "./pages/tabs/Humor";
-import Profile from "./pages/tabs/Profile";
-import Login from "./pages/Login";
+import Loader from "./components/common/Loader";
+import Home from "./pages/tabs/HomePage";
+import Consultas from "./pages/tabs/ConsultaPage";
+import Humor from "./pages/tabs/HumorPage";
+import Profile from "./pages/tabs/ProfilePage";
+import Login from "./pages/LoginPage";
 import AppOnboarding from "./pages/onboarding/AppOnboarding";
 import HumorOnboarding from "./pages/onboarding/HumorOnboarding";
-
+import { Capacitor } from "@capacitor/core";
 import { PushNotificationSchema, PushNotifications, Token, ActionPerformed } from '@capacitor/push-notifications';
 
 import moment from "moment";
 import "moment/locale/pt-br";
+
 
 setupIonicReact({
   mode: "ios",
@@ -64,23 +65,26 @@ const App = () => {
 
   useEffect(() => {
     !authInfo?.initialized && (async () => await initializeAuth())();
+    const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotifications')
+    if (isPushNotificationsAvailable) {
+      PushNotifications.checkPermissions().then((res) => {
+        if (res.receive !== 'granted') {
+          PushNotifications.requestPermissions().then((res) => {
+            if (res.receive === 'denied') {
+              alert('Push Notification permission denied');
+            }
+            else {
+              alert('Push Notification permission granted');
+              register();
+            }
+          });
+        }
+        else {
+          register();
+        }
+      });
+    }
 
-    PushNotifications.checkPermissions().then((res) => {
-      if (res.receive !== 'granted') {
-        PushNotifications.requestPermissions().then((res) => {
-          if (res.receive === 'denied') {
-            alert('Push Notification permission denied');
-          }
-          else {
-            alert('Push Notification permission granted');
-            register();
-          }
-        });
-      }
-      else {
-        register();
-      }
-    });
   }, [authInfo, initializeAuth]);
 
   const register = () => {

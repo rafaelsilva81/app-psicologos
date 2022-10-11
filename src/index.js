@@ -4,11 +4,11 @@ import App from "./App";
 
 import { AuthProvider } from "./services/auth";
 import { FirebaseAppProvider, FirestoreProvider, StorageProvider } from "reactfire";
-import { app } from "./firebase.config";
+import { app } from "./services/firebase.config";
 import { db } from "./services/database";
 import { storage } from "./services/storage";
 
-import Loader from "./components/Loader";
+import Loader from "./components/common/Loader";
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
