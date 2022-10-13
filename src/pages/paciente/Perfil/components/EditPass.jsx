@@ -7,47 +7,39 @@ import {
   IonItem,
   IonLabel,
   IonPage,
-  IonSelect,
-  IonSelectOption,
   IonSpinner,
   IonText,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
 
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import "../../styles/humor_modal.css";
 
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import InputItem from "../../components/InputItem";
+import InputItem from "../../../../common/InputItem";
 
 // @TODO Refazer isso aqui
 /* MODAL */
-const EditData = ({ onDismiss, userData }) => {
+const EditPass = ({ onDismiss }) => {
   const validationSchema = Yup.object().shape({
-    newMail: Yup.string()
-      .email("O e-mail não tem um formato válido")
-      .required("Esse campo é obrigatório")
-      .max(255),
-    newName: Yup.string().required("Esse campo é obrigatório"),
+    oldPass: Yup.string().max(255).required("Esse campo é obrigatório"),
+    newPass: Yup.string()
+      .min(6, "A senha precisa ter no mínimo 6 caracteres")
+      .max(255)
+      .required("Esse campo é obrigatório"),
+    newPassConfirmation: Yup.string()
+      .oneOf([Yup.ref("newPass"), null], "As senhas não são iguais!")
+      .required("Esse campo é obrigatório"),
   });
-
-  const { userName, email, gender } = userData;
 
   const {
     register,
     handleSubmit,
-    setValue,
-    control,
     formState: { errors, isSubmitting },
   } = useForm({
-    defaultValues: {
-      newName: userName,
-      newMail: email,
-      newGender: gender,
-    },
     resolver: yupResolver(validationSchema),
   });
 
@@ -64,7 +56,7 @@ const EditData = ({ onDismiss, userData }) => {
               Fechar
             </IonButton>
           </IonButtons>
-          <IonTitle> Alteração de dados </IonTitle>
+          <IonTitle>Redefinir Senha</IonTitle>
           <IonButtons slot="end">
             <IonButton onClick={handleSubmit(finishForm)}>Confirmar</IonButton>
           </IonButtons>
@@ -73,58 +65,60 @@ const EditData = ({ onDismiss, userData }) => {
 
       <IonContent className="ion-padding">
         <form onSubmit={handleSubmit(finishForm)}>
-          <h3 className="ion-margin-start"> ALTERAR SEUS DADOS PESSOAIS </h3>
+          <h3 className="ion-margin-start"> ALTERAR SUA SENHA </h3>
 
           <InputItem
             lines="full"
             className="ion-margin-horizontal ion-margin-top"
           >
-            <IonLabel position="stacked">Nome</IonLabel>
+            <IonLabel position="floating">Senha atual</IonLabel>
             <IonInput
+              required
               clearOnEdit={false}
-              type="text"
-              {...register("newName")}
+              placeholder="Entre com sua senha atual"
+              type="password"
+              {...register("oldPass")}
             ></IonInput>
           </InputItem>
           <div className="ion-margin">
-            <IonText color="danger"> {errors.newName?.message} </IonText>
+            <IonText color="danger"> {errors.oldPass?.message} </IonText>
           </div>
 
           <InputItem
             lines="full"
             className="ion-margin-horizontal ion-margin-top"
           >
-            <IonLabel position="stacked">Email</IonLabel>
+            <IonLabel position="floating">Nova senha</IonLabel>
             <IonInput
+              required
               clearOnEdit={false}
-              type="email"
-              {...register("newMail")}
+              type="password"
+              placeholder="Entre com sua nova senha"
+              {...register("newPass")}
             ></IonInput>
           </InputItem>
           <div className="ion-margin">
-            <IonText color="danger"> {errors.newMail?.message} </IonText>
+            <IonText color="danger"> {errors.newPass?.message} </IonText>
           </div>
 
           <InputItem
             lines="full"
             className="ion-margin-horizontal ion-margin-top"
           >
-            <IonLabel position="stacked">Gênero</IonLabel>
-            <Controller
-              render={({ field }) => (
-                <IonSelect
-                  value={field.value}
-                  onIonChange={(e) => setValue("newGender", e.detail.value)}
-                >
-                  <IonSelectOption value="f">Feminino</IonSelectOption>
-                  <IonSelectOption value="m">Masculino</IonSelectOption>
-                  <IonSelectOption value="x">Outro</IonSelectOption>
-                </IonSelect>
-              )}
-              control={control}
-              name="newGender"
-            />
+            <IonLabel position="floating">Confirmação da senha</IonLabel>
+            <IonInput
+              required
+              clearOnEdit={false}
+              type="password"
+              placeholder="Digite a nova senha novamente"
+              {...register("newPassConfirmation")}
+            ></IonInput>
           </InputItem>
+          <div className="ion-margin">
+            <IonText color="danger">
+              {errors.newPassConfirmation?.message}
+            </IonText>
+          </div>
 
           <IonButton
             disabled={isSubmitting}
@@ -141,4 +135,4 @@ const EditData = ({ onDismiss, userData }) => {
   );
 };
 
-export default EditData;
+export default EditPass;

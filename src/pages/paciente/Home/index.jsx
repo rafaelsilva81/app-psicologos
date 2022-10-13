@@ -12,9 +12,9 @@ import {
   IonToolbar,
   useIonModal,
 } from "@ionic/react";
-import "../styles/home.css";
+import "../../styles/home.css";
 import { happy, person, calendar, radio } from "ionicons/icons";
-import Meditation from "../MeditationPage";
+import Meditation from "./components/MeditationPage";
 import { useHistory } from "react-router";
 
 const Home = () => {

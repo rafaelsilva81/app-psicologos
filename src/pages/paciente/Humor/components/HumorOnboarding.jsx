@@ -7,45 +7,55 @@ import {
   IonSlides,
 } from "@ionic/react";
 import { arrowBack, arrowForward } from "ionicons/icons";
-import { useRef, useState } from "react";
-import AppSlide from "../../components/AppSlide";
-import DecorationCircle from "../../components/common/DecorationCircle";
+import { useEffect, useRef, useState } from "react";
+import { useHistory } from "react-router";
+import DecorationCircle from "../../../../common/DecorationCircle";
+import HumorSlide from "./HumorSlide";
 
-/* IMAGE IMPORTS */
-import onboarding1 from "../../assets/imgs/onboarding-1.svg";
-import onboarding2 from "../../assets/imgs/onboarding-2.svg";
-import onboarding3 from "../../assets/imgs/onboarding-3.svg";
-import onboarding4 from "../../assets/imgs/onboarding-4.svg";
+/* Imagens */
+// @TODO mudar essas imagens
+import humorOnboarding1 from "../../assets/imgs/onboarding-1.svg";
+import humorOnboarding2 from "../../assets/imgs/onboarding-2.svg";
+import humorOnboarding3 from "../../assets/imgs/onboarding-3.svg";
+import humorOnboarding4 from "../../assets/imgs/onboarding-4.svg";
 
-const AppOnboarding = () => {
+const HumorOnboarding = () => {
   const sliderRef = useRef();
   const [lastSlide, setLastSlide] = useState(false);
   const [firstSlide, setFirstSlide] = useState(true);
 
   const slideContent = [
     {
-      image: onboarding1,
+      image: humorOnboarding1,
       mainSlide: true,
-      title: "<NOME DO APP>",
-      text: "Aplicativo para acompanhamento com o seu Psicólogo",
+      title: "Sua jornada começou!",
+      text: "A partir de agora, acompanhe seu humor, hábitos e atividades",
     },
     {
-      image: onboarding2,
-      title: "Organize",
-      text: "Marque suas consultas no conforto de sua casa",
+      image: humorOnboarding2,
+      title: "Adicione suas atividades do dia-a-dia",
+      text: "Responda quantas vezes quiser para acompanhar seu crescimento",
     },
     {
-      image: onboarding3,
-      title: "Expresse",
-      text: "Faça um acompanhamento do seu dia-a-dia através do app",
+      image: humorOnboarding3,
+      title: "Cultive sua Árvore",
+      text: "Sua árvore representa seus resultados, e ela cresce junto com você",
     },
     {
-      image: onboarding4,
+      image: humorOnboarding4,
       title: "Pronto(a) para começar?",
       finalSlide: true,
       text: "",
     },
   ];
+
+  const history = useHistory();
+  useEffect(() => {
+    let r = window.localStorage.getItem("HAS_USED_HUMOR_FEATURE") || false;
+    if (r === true) {
+      history.replace("/humor");
+    }
+  }, [history]);
 
   const checkSlides = async () => {
     const isLastSlide = await sliderRef.current.isEnd();
@@ -57,14 +67,14 @@ const AppOnboarding = () => {
   return (
     <IonPage>
       <IonContent scrollY={false}>
-        <DecorationCircle position="top-left" />
-        <DecorationCircle position="bottom-right" size="1.5" />
+        <DecorationCircle secondary position="top-left" />
+        <DecorationCircle secondary position="bottom-right" size="1.5" />
         <IonSlides
           style={{
-            backgroundColor: "var(--ion-color-secondary)",
+            backgroundColor: "var(--ion-color-primary)",
           }}
           onIonSlideWillChange={checkSlides}
-          pager={true}
+          pager={false}
           ref={sliderRef}
           id="slider"
           options={{
@@ -75,12 +85,12 @@ const AppOnboarding = () => {
         >
           {slideContent.map((slide, index) => {
             return (
-              <AppSlide
+              <HumorSlide
                 key={index}
                 {...slide}
                 lastSlide={lastSlide}
                 sliderRef={sliderRef}
-                goTo="/login"
+                goTo="/humor"
               />
             );
           })}
@@ -91,6 +101,7 @@ const AppOnboarding = () => {
             <IonButton
               size="large"
               fill="clear"
+              color="secondary"
               onClick={() => sliderRef.current.slidePrev()}
             >
               <IonIcon icon={arrowBack} />
@@ -101,6 +112,7 @@ const AppOnboarding = () => {
             <IonButton
               size="large"
               fill="clear"
+              color="secondary"
               onClick={() => sliderRef.current.slideNext()}
             >
               <IonIcon icon={arrowForward} />
@@ -112,4 +124,4 @@ const AppOnboarding = () => {
   );
 };
 
-export default AppOnboarding;
+export default HumorOnboarding;

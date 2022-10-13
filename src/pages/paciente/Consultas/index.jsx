@@ -17,16 +17,18 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { useFirestore, useFirestoreCollectionData } from "reactfire";
-import AppointmentItem from "../../components/AppointmentItem";
-import { useAuth } from "../../services/auth";
+import { useFirestore, useFirestoreCollectionData, useUser } from "reactfire";
+import AppointmentItem from "./components/AppointmentItem";
+import { useAuth } from "../../../services/old/auth";
 import noResultImg from "../../assets/imgs/no_result.svg";
 import { useHistory } from "react-router";
 
 const Consultas = () => {
   const history = useHistory();
-  const { authInfo } = useAuth();
-  const { user } = authInfo;
+
+  const { status, data: user } = useUser({
+    suspense: true
+  });
 
   const userRef = doc(useFirestore(), "users", user.email);
   const q = query(

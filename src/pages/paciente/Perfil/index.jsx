@@ -17,17 +17,18 @@ import {
 
 import { logOut as logOutIcon } from "ionicons/icons";
 
-import { useAuth } from "../../services/auth";
 import { useHistory } from "react-router-dom";
 
-import ProfileData from "../../components/ProfileData";
-import ContractData from "../../components/ContractData";
+import ProfileData from "./components/ProfileData";
+import ContractData from "./components/ContractData";
 import { doc, updateDoc } from "firebase/firestore";
-import { useFirestore, useFirestoreDocData } from "reactfire";
+import { useFirestore, useFirestoreDocData, useUser } from "reactfire";
 
 import "../../styles/profile.css";
-import EditPass from "../modals/EditPass";
-import EditData from "../modals/EditData";
+import EditPass from "./components/EditPass";
+import EditData from "./components/EditData";
+import { signOut } from "firebase/auth";
+import { auth } from "../../../services";
 
 // TODO: CSS PROPRIO PARA ESSA PAGINA
 // TODO: COMPONENTIZAÇÃO E OBTER DADOS DO BANCO
@@ -35,11 +36,12 @@ import EditData from "../modals/EditData";
 const Profile = () => {
   const [presentAlert] = useIonAlert();
 
-  const { authInfo, logOut, changePassword, reauthenticateUser } = useAuth();
-
   const history = useHistory();
 
-  const { user } = authInfo;
+  const { status, data: user } = useUser({
+    suspense: true
+  });
+
   const userRef = doc(useFirestore(), "users", user.email);
 
   const { data: userData } = useFirestoreDocData(userRef, {
@@ -60,32 +62,7 @@ const Profile = () => {
   });
 
   function openPassChangePage() {
-    presentPassPage({
-      onWillDismiss: (ev) => {
-        if (ev.detail.role === "confirm") {
-          const { oldPass, newPass } = ev.detail.data;
-          const { email } = user;
-          reauthenticateUser(email, oldPass)
-            .then(() => {
-              changePassword(newPass).then(() => {
-                presentAlert({
-                  header: "ALTERAÇÃO DE SENHA",
-                  message: "Senha alterada com sucesso.",
-                  buttons: ["OK"],
-                });
-              });
-            })
-            .catch((error) => {
-              presentAlert({
-                header: "ALTERAÇÃO DE SENHA",
-                message:
-                  "Não foi possível alterar a Senha, verífique se você informou os dados corretamente.",
-                buttons: ["OK"],
-              });
-            });
-        }
-      },
-    });
+
   }
 
   const [presentEditData, dismissEditData] = useIonModal(EditData, {
@@ -118,9 +95,11 @@ const Profile = () => {
   }
 
   const handleLogout = async () => {
-    await logOut();
-    history.push(".");
-    window.location.reload();
+    signOut(auth).then(() => {
+      history.push("/")
+    }).catch((error) => {
+      alert(error)
+    });
   };
 
   return (

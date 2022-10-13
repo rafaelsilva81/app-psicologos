@@ -13,10 +13,10 @@ import {
 } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import HumorOnboarding from "../onboarding/HumorOnboarding";
+import HumorOnboarding from "./components/HumorOnboarding";
 import "../../styles/humor.css";
 import { addCircle } from "ionicons/icons";
-import HumorForm from "../modals/HumorForm";
+import HumorForm from "./components/HumorForm";
 
 // TODO: tree
 import tree1 from "../../assets/imgs/tree-1.svg";
@@ -25,15 +25,15 @@ import tree3 from "../../assets/imgs/tree-3.svg";
 import tree4 from "../../assets/imgs/tree-4.svg";
 import tree5 from "../../assets/imgs/tree-5.svg";
 
-import { useAuth } from "../../services/auth";
 import { doc, updateDoc } from "firebase/firestore";
-import { useFirestore, useFirestoreDocData } from "reactfire";
+import { useFirestore, useFirestoreDocData, useUser } from "reactfire";
 
 const Humor = () => {
   const history = useHistory();
 
-  const { authInfo } = useAuth();
-  const { user } = authInfo;
+  const { status, data: user } = useUser({
+    suspense: true
+  });
 
   const [presentAlert] = useIonAlert();
 

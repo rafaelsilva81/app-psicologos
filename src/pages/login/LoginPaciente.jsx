@@ -1,4 +1,5 @@
 // Ionic and React
+import React from 'react'
 import { useEffect } from "react";
 import {
   IonButton,
@@ -20,60 +21,27 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 
-// Authentication
-import { useAuth } from "../services/auth";
 
 // Components and custom CSS
-import DecorationCircle from "../components/common/DecorationCircle";
 import "../styles/login.css";
 
 // Images
 import loginImg from "../assets/imgs/login.svg";
-import ResetPassword from "./modals/ResetPassword";
-import InputItem from "../components/InputItem";
+import ResetPassword from "./components/ResetPassword";
+import InputItem from '../../common/InputItem';
 
-const Login = ({ history }) => {
+const LoginPaciente = ({ history }) => {
+
   const [presentAlert] = useIonAlert();
-
-  let { logIn, checkFirstAccess, resetPassword } = useAuth();
 
   const [present, dismiss] = useIonModal(ResetPassword, {
     onDismiss: (data, role) => dismiss(data, role),
   });
 
   function openResetPage() {
-    present({
-      onWillDismiss: (ev) => {
-        if (ev.detail.role === "confirm") {
-          const { data } = ev.detail;
-          resetPassword(data)
-            .then(() => {
-              presentAlert({
-                header: "REDEFINIÇÃO DE SENHA",
-                message:
-                  "Um e-mail foi enviado para você com os próximos passos para redefinir sua senha!",
-                buttons: ["OK"],
-              });
-            })
-            .catch((error) => {
-              presentAlert({
-                header: "REDEFINIÇÃO DE SENHA",
-                message:
-                  "Não foi possível redefinir a Senha, verifique o e-mail informado.",
-                buttons: ["OK"],
-              });
-            });
-        }
-      },
-    });
+
   }
 
-  useEffect(() => {
-    let hasAcessed = checkFirstAccess();
-    if (hasAcessed === false) {
-      history.replace("/onboarding");
-    }
-  }, [checkFirstAccess, history]);
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -93,19 +61,12 @@ const Login = ({ history }) => {
   });
 
   const loginUser = (data) => {
-    logIn(data)
-      .then(() => {
-        history.replace("/home");
-      })
-      .catch((error) => {
-        setError("apiError", { message: error });
-      });
+
   };
 
   return (
     <IonPage id="login-form">
       <IonContent>
-        <DecorationCircle position="top-right" />
         <IonGrid>
           <IonRow
             className="
@@ -188,4 +149,4 @@ const Login = ({ history }) => {
   );
 };
 
-export default Login;
+export { LoginPaciente };

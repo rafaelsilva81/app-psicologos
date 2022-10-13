@@ -26,30 +26,28 @@ import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
 
-/* Theme variables */
-import "./styles/variables.css";
 
 /* OTHER IMPORTS */
 import { home, happy, person, calendar } from "ionicons/icons";
 import { Redirect, Route } from "react-router";
 
 import { useEffect } from "react";
-
-import { useAuth } from "./services/auth";
-
-import Loader from "./components/common/Loader";
-import Home from "./pages/tabs/HomePage";
-import Consultas from "./pages/tabs/ConsultaPage";
-import Humor from "./pages/tabs/HumorPage";
-import Profile from "./pages/tabs/ProfilePage";
+import Loader from "./common/Loader";
+import Home from "./pages/paciente/Home";
+import Consultas from "./pages/paciente/Consultas";
+import Humor from "./pages/paciente/Humor";
+import Profile from "./pages/paciente/Perfil";
 import Login from "./pages/LoginPage";
-import AppOnboarding from "./pages/onboarding/AppOnboarding";
-import HumorOnboarding from "./pages/onboarding/HumorOnboarding";
+import AppOnboarding from "./pages/login/components/AppOnboarding";
+import HumorOnboarding from "./pages/paciente/Humor/components/HumorOnboarding";
 import { Capacitor } from "@capacitor/core";
 import { PushNotificationSchema, PushNotifications, Token, ActionPerformed } from '@capacitor/push-notifications';
 
 import moment from "moment";
 import "moment/locale/pt-br";
+import { useSigninCheck } from "reactfire";
+import { LoginPaciente } from "./pages/login/LoginPaciente";
+import { LoginMedico } from "./pages/login/LoginMedico";
 
 
 setupIonicReact({
@@ -59,33 +57,34 @@ setupIonicReact({
 });
 
 const App = () => {
+
   moment().locale("pt-br");
 
-  const { authInfo, initializeAuth } = useAuth();
+  const { status, data: signInCheckResult } = useSigninCheck();
 
   useEffect(() => {
-    !authInfo?.initialized && (async () => await initializeAuth())();
-    const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotifications')
-    if (isPushNotificationsAvailable) {
-      PushNotifications.checkPermissions().then((res) => {
-        if (res.receive !== 'granted') {
-          PushNotifications.requestPermissions().then((res) => {
-            if (res.receive === 'denied') {
-              alert('Push Notification permission denied');
-            }
-            else {
-              alert('Push Notification permission granted');
-              register();
-            }
-          });
-        }
-        else {
-          register();
-        }
-      });
+    if (Capacitor.isNativePlatform()) {
+      const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotifications')
+      if (isPushNotificationsAvailable) {
+        PushNotifications.checkPermissions().then((res) => {
+          if (res.receive !== 'granted') {
+            PushNotifications.requestPermissions().then((res) => {
+              if (res.receive === 'denied') {
+                alert('Push Notification permission denied');
+              }
+              else {
+                alert('Push Notification permission granted');
+                register();
+              }
+            });
+          }
+          else {
+            register();
+          }
+        });
+      }
     }
-
-  }, [authInfo, initializeAuth]);
+  });
 
   const register = () => {
     console.log('Initializing HomePage');
@@ -116,13 +115,13 @@ const App = () => {
   }
 
 
-  if (!authInfo || !authInfo.initialized) {
+  if (status === "loading") {
     return <Loader />;
   } else {
     return (
       <IonApp>
         <IonReactRouter>
-          {authInfo?.loggedIn === true ?
+          {signInCheckResult.signedIn ?
             (
               <IonTabs id="main-view">
                 <IonRouterOutlet>
@@ -168,12 +167,12 @@ const App = () => {
                 </IonTabBar>
               </IonTabs>
             ) : (
-              <>
-                <Route exact path="/loginFunc" />
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/onboarding" component={AppOnboarding} />
+              <IonReactRouter>
+                <Route exact path="/loginMedico" component={LoginMedico} />
+                <Route exact path="/login" component={LoginPaciente} />
+                {/* <Route exact path="/onboarding" component={AppOnboarding} /> */}
                 <Redirect exact from="/" to="/login" />
-              </>
+              </IonReactRouter>
             )}
         </IonReactRouter>
       </IonApp>
